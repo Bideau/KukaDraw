@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="KUKAJavaLib/roboticsAPI.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/KUKAIMERIR/KUKAJavaLib/roboticsAPI-javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="KUKAJavaLib/common.utilities.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/KUKAIMERIR/KUKAJavaLib/common.utilities-javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="KUKAJavaLib/roboticsAPI.handGuiding.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/KUKAIMERIR/KUKAJavaLib/roboticsAPI.handGuiding-javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="KUKAJavaLib/applicationServer.publishing.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/KUKAIMERIR/KUKAJavaLib/applicationServer.publishing-javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

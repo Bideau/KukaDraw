@@ -1,0 +1,19 @@
+package Parsing;
+
+public class SocketTrameParsing {
+
+	
+	
+	public SocketTrameParsing(){
+		System.out.println("Démarrage Construteur");
+		
+		
+		System.out.println("Fin Constructeur Construteur");
+	}
+	
+	
+	public static void main(String[] args) {
+		
+	}// Fin de la méthode main
+
+}

@@ -1,0 +1,35 @@
+package Parsing;
+
+
+import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
+
+import com.kuka.roboticsAPI.controllerModel.Controller;
+import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.Frame;
+import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
+import com.kuka.roboticsAPI.geometricModel.Tool;
+import com.kuka.roboticsAPI.geometricModel.math.Transformation;
+import com.kuka.roboticsAPI.motionModel.RelativeLIN;
+import com.kuka.roboticsAPI.motionModel.Spline;
+
+public class SocketTrameParsing {
+
+	
+	
+	public SocketTrameParsing(){
+		
+		
+		System.out.println("Démarrage Construteur");
+		
+		
+		
+		System.out.println("Fin Constructeur Construteur");
+	}
+	
+	
+	public static void main(String[] args) {
+		
+	}// Fin de la méthode main
+
+}
