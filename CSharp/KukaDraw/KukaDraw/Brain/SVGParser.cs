@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Collections;
 using System.Xml;
+using System.Xml.Linq;
+using System.IO;
 
 namespace KukaDraw.Brain
 {
     class SVGParser
     {
         private ArrayList pointArray;
-
         public SVGParser()
         {
             this.pointArray = new ArrayList();
@@ -27,18 +28,25 @@ namespace KukaDraw.Brain
         {
             this.pointArray = ArrayPoint;
         }
-        public void addPoint(Point point)
+        public void addPoint(PointF point)
         {
             this.pointArray.Add(point);
         }
-        public void SvgXmlReader(string PathFile){
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.DtdProcessing = DtdProcessing.Parse;
-            XmlReader reader = XmlReader.Create(PathFile,settings);
-            reader.Read();
-            reader.ReadStartElement("path");
-            Console.WriteLine(reader.ReadString());
-            reader.ReadEndElement();
+        public void SvgXmlReader(Stream xmlStream)
+        {
+            var reader = new XmlTextReader(xmlStream);
+            reader.ProhibitDtd = false;
+            reader.DtdProcessing = DtdProcessing.Ignore;
+            reader.XmlResolver = null;
+
+            var doc = new XmlDocument();
+            doc.XmlResolver = null;
+            doc.Load(reader);
+
+            foreach (XmlElement node in doc.GetElementsByTagName("path"))
+            {
+                Console.WriteLine(node.GetAttribute("d"));
+            }
         }
     }
 }

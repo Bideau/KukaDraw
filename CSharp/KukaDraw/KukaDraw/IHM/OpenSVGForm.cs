@@ -52,13 +52,13 @@ namespace KukaDraw.IHM
                             this.tbPathFile.Text = this.pathFile;
                             this.svgFile = SvgDocument.Open(pathFile);
                             this.pbFileSVG.Image = this.svgFile.Draw();
-                            parser.SvgXmlReader(this.pathFile);                        
+                            parser.SvgXmlReader(myStream);                        
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                        MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
 
