@@ -7,10 +7,10 @@ import java.net.Socket;
 public class Server {
 
 	private BufferedReader in=null;
-	private Socket client=null;
-	public Server(BufferedReader reader,Socket sock) {
+	private boolean disco=false;
+	public Server(BufferedReader reader) {
 		this.in=reader;
-		this.client=sock;
+		disco=false;
 	}
 	
 	public String getTrame(){
@@ -20,15 +20,14 @@ public class Server {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			disco=true;
+			
 		}
 		return tmp;
 	}
 	
 	public boolean isConnected (){
-		if (client == null){
-			return false;
-		}
-		return true;
+		return disco;
 	}
 
 }
