@@ -39,7 +39,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Brain\" />
     <Folder Include="Com\" />
     <Folder Include="Core\" />
   </ItemGroup>
@@ -55,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Brain\SvgFile.cs" />
     <Compile Include="IHM\MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>

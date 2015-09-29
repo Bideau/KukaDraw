@@ -8,6 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*
+ * @author : Aubert Christophe
+ * @date : 29/09/2015
+ */
+
 namespace KukaDraw.IHM
 {
     public partial class MenuForm : Form
@@ -24,6 +29,8 @@ namespace KukaDraw.IHM
 
         private void bDrawSVG_Click(object sender, EventArgs e)
         {
+            OpenSVGForm openSVG = new OpenSVGForm();
+            openSVG.Show();
 
         }
     }
