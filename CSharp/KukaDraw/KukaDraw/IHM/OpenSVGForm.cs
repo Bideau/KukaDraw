@@ -27,12 +27,13 @@ namespace KukaDraw.IHM
         public OpenSVGForm()
         {
             InitializeComponent();
-            svgFile = new SvgDocument();
+            this.svgFile = new SvgDocument();
         }
 
         private void bOpen_Click(object sender, EventArgs e)
         {
             Stream myStream = null;
+            SVGParser parser = new SVGParser();
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.InitialDirectory = "c:\\";
             fileDialog.DefaultExt = ".svg";
@@ -47,12 +48,11 @@ namespace KukaDraw.IHM
                     {
                         using (myStream)
                         {
-                            pathFile = fileDialog.FileName;
-                            tbPathFile.Text = pathFile;
-                            svgFile = SvgDocument.Open(pathFile);
-                            pbFileSVG.Image = svgFile.Draw();
-                            //Console.WriteLine(svgFile.GetSvgDocument().GetXML());
-                            
+                            this.pathFile = fileDialog.FileName;
+                            this.tbPathFile.Text = this.pathFile;
+                            this.svgFile = SvgDocument.Open(pathFile);
+                            this.pbFileSVG.Image = this.svgFile.Draw();
+                            parser.SvgXmlReader(this.pathFile);                        
                         }
                     }
                 }
@@ -61,6 +61,11 @@ namespace KukaDraw.IHM
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
+
+        }
+
+        private void bDraw_Click(object sender, EventArgs e)
+        {
 
         }
     }

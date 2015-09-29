@@ -78,6 +78,7 @@
             this.bDraw.TabIndex = 4;
             this.bDraw.Text = "Dessiner";
             this.bDraw.UseVisualStyleBackColor = true;
+            this.bDraw.Click += new System.EventHandler(this.bDraw_Click);
             // 
             // OpenSVGForm
             // 

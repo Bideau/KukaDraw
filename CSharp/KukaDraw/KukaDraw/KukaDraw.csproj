@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Brain\SvgFile.cs" />
+    <Compile Include="Brain\SVGParser.cs" />
     <Compile Include="IHM\MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
