@@ -10,22 +10,26 @@ public class Server {
 	private boolean disco=false;
 	public Server(BufferedReader reader) {
 		this.in=reader;
-		disco=false;
+		disco=true;
 	}
-	
+
 	public String getTrame(){
 		String tmp=null;
 		try {
 			tmp = in.readLine();
+			if (tmp !=null){
+				if (tmp.equals("DISCONNECTED")){
+					disco=false;
+				}
+			}
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			disco=true;
-			
+			disco=false;
 		}
 		return tmp;
 	}
-	
+
 	public boolean isConnected (){
 		return disco;
 	}
