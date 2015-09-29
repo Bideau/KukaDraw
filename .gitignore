@@ -1,6 +1,9 @@
 # Suppresion metadata Eclipse
-**/.metadata/
+.metadata/
 
 # Suppression bin Eclipse
-**/bin/
+bin/
 
+#Suppresion metadata Visual
+obj/
+**/*.suo
