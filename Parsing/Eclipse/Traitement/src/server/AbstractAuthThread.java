@@ -1,6 +1,8 @@
 package server;
 import java.io.IOException;
 import java.net.Socket;
+
+import Parsing.SocketTrameParsing;
 public abstract class AbstractAuthThread extends AbstractThreadText
 {
 	AbstractAuthThread(Socket client) {
@@ -30,7 +32,7 @@ public abstract class AbstractAuthThread extends AbstractThreadText
 			}
 		}*/
 		
-		SocketTrameParsing myParse=new SocketTrameParsing(new Server(in));
-		myParse.start();
+		SocketTrameParsing myParse=new SocketTrameParsing(new Server(in,sock));
+		myParse.trameStart();
 	}
 }
