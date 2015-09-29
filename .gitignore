@@ -4,3 +4,6 @@
 # Suppression bin Eclipse
 **/bin/
 
+#Suppresion metadata Visual
+**/obj/
+**/*.suo
