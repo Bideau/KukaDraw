@@ -113,13 +113,15 @@ public class SocketTrameParsing {
 		String AncienneTrame = "";
 
 		// Boucle infinie récupérant les informations dans le socket
-		while(true){
+		while(MyServer.isConnected()){
 			System.out.println("toto 1");
+			
 			// Récupération de la trame sur le serveur
 			this.Trame = MyServer.getTrame();
+			
 			// Temporisation de 1s
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -129,9 +131,9 @@ public class SocketTrameParsing {
 			if(this.Trame != null){
 				System.out.println("toto 2\nTrame : " + this.Trame + "\nAncienne Trame : " + AncienneTrame);
 				if(!(AncienneTrame.equals(this.Trame))){
-					System.out.println("toto 3");
+					//System.out.println("toto 3");
 					//MonParsing.Trame = "LINE:1.21;1:2.02;2.8";
-					System.out.println(this.Trame);
+					//System.out.println(this.Trame);
 					this.TraitementTrame();
 					AncienneTrame = this.Trame;
 				}
