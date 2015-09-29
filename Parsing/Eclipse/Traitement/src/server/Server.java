@@ -7,7 +7,7 @@ import java.net.Socket;
 public class Server {
 
 	private BufferedReader in=null;
-	private boolean disco=false;
+	private boolean disco=true;
 	public Server(BufferedReader reader) {
 		this.in=reader;
 		disco=true;
@@ -19,13 +19,14 @@ public class Server {
 			tmp = in.readLine();
 			if (tmp !=null){
 				if (tmp.equals("DISCONNECTED")){
+					System.out.println("Test");
 					disco=false;
 				}
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			disco=false;
+			disco=true;
 		}
 		return tmp;
 	}
