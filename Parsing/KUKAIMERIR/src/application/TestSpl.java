@@ -80,7 +80,7 @@ public class TestSpl extends RoboticsAPIApplication {
 		p3.y = 0.0;
 
 		
-		curve = new BezierCurve(p0, p1, p2, p3);
+		curve = new BezierCurve(p0, p1/*, p2, p3*/);
 	
 		trajectory = curve.getTrajectory(20);
 		
