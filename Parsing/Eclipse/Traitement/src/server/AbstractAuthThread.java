@@ -32,7 +32,7 @@ public abstract class AbstractAuthThread extends AbstractThreadText
 			}
 		}*/
 		
-		SocketTrameParsing myParse=new SocketTrameParsing(new Server(in,sock));
+		SocketTrameParsing myParse=new SocketTrameParsing(new Server(in));
 		myParse.trameStart();
 	}
 }
