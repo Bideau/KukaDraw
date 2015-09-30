@@ -54,7 +54,7 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		this.p1y = 0.0;
 		this.p2y = 0.0;
 		
-		try {
+		/*try {
 			BufferedReader bf = new BufferedReader(new FileReader(new File("C:\\KukaScript.conf")));
 			String toto = bf.readLine();
 			String[] Parts = toto.split("=");
@@ -70,7 +70,7 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		} catch (IOException e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	private Transformation getTranslationFromFrame(Frame frameBefore, Frame frameDestination)
