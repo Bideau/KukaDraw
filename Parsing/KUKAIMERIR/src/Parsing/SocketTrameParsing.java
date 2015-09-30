@@ -1,8 +1,13 @@
 package Parsing;
 
+import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+import com.kuka.roboticsAPI.deviceModel.LBR;
+
 import server.Server;
 import application.ScriptKuka;
-public class SocketTrameParsing {
+//import application.TestBaseMove;
+
+public class SocketTrameParsing extends RoboticsAPIApplication {
 
 	private String Trame;
 
@@ -14,13 +19,20 @@ public class SocketTrameParsing {
 	private double p2y;
 
 	private Server MyServer;
+	private ScriptKuka MonScriptKuka;
 
 	//************************** CONSTRUCTEUR ************************//
+	
+	public SocketTrameParsing(){
+		getLogger().info("Constructeur");
+	}
+	
 	public SocketTrameParsing(Server ServerParametre){
 
-		System.out.println("Démarrage Construteur ...");
+		getLogger().info("Démarrage Construteur ...");
 
 		this.MyServer = ServerParametre;
+		this.MonScriptKuka = new ScriptKuka();
 
 		// Initialisation des coordonnées des différents points
 		this.p1x = 0.0;
@@ -34,13 +46,13 @@ public class SocketTrameParsing {
 		// Initialisation du booléen permettatn de stopper la lecture dans la socket
 		this.StopTrame = false;
 
-		System.out.println("Fin Constructeur\n");
+		getLogger().info("Fin Constructeur\n");
 	}
 	//***************************************************************//
 
 	//************************ TRAITEMENT TRAME *********************//
 	public void TraitementTrame(){
-		System.out.println("Démarrage TraitementTrame ...");
+		getLogger().info("Démarrage TraitementTrame ...");
 
 		// On récupère l'ordre donné par l'IHM
 		// On recherche LINE dans la chaîne récupérée
@@ -48,18 +60,19 @@ public class SocketTrameParsing {
 		int positionOrdreSTART = this.Trame.indexOf("START");
 
 		if (positionOrdreSTOP != -1){
-			System.out.println("Reçu STOP");
+			getLogger().info("Reçu STOP");
 			StopTrame = true;
 		}
 
 		if (positionOrdreSTART != -1){
-			System.out.println("Reçu START");
+			getLogger().info("Reçu START");
+			this.MonScriptKuka.ApprochePaper();
 			StopTrame = false;
 		}
 
 		// Si on a reçu un arret de lecture
 		if(StopTrame){
-			System.out.println("STOP !");
+			getLogger().info("STOP !");
 		}else{
 			// On récupère l'ordre donné par l'IHM
 			// On recherche LINE dans la chaîne récupérée
@@ -73,7 +86,8 @@ public class SocketTrameParsing {
 				String[] GeneralParts = this.Trame.split(":");
 
 				for(int i=0; i<GeneralParts.length; i++){
-					System.out.println("parts " + i + " : " + GeneralParts[i]);
+					//getLogger().info("parts " + i + " : " + GeneralParts[i]);
+					getLogger().info("parts " + i + " : " + GeneralParts[i]);
 				}
 
 				// On parse les coordonnées x et y du 1er point
@@ -82,9 +96,9 @@ public class SocketTrameParsing {
 				this.p1x = Double.parseDouble(CoordonneesPoint1[0]);
 				this.p1y = Double.parseDouble(CoordonneesPoint1[1]);
 
-				System.out.println("\nPoint 1 :");
-				System.out.println("Coordonnée X : string(" + CoordonneesPoint1[0] + ") / double(" + this.p1x + ")");
-				System.out.println("Coordonnée Y : string(" + CoordonneesPoint1[1] + ") / double(" + this.p1y + ")");
+				getLogger().info("\nPoint 1 :");
+				getLogger().info("Coordonnée X : string(" + CoordonneesPoint1[0] + ") / double(" + this.p1x + ")");
+				getLogger().info("Coordonnée Y : string(" + CoordonneesPoint1[1] + ") / double(" + this.p1y + ")");
 
 				// On parse les coordonnées x et y du 2eme point
 				String[] CoordonneesPoint2 = GeneralParts[2].split(";");
@@ -92,15 +106,15 @@ public class SocketTrameParsing {
 				this.p2x = Double.parseDouble(CoordonneesPoint2[0]);
 				this.p2y = Double.parseDouble(CoordonneesPoint2[1]);
 
-				System.out.println("\nPoint 2 :");
-				System.out.println("Coordonnée X : string(" + CoordonneesPoint2[0] + ") / double(" + this.p2x + ")");
-				System.out.println("Coordonnée Y : string(" + CoordonneesPoint2[1] + ") / double(" + this.p2y + ")");
+				getLogger().info("\nPoint 2 :");
+				getLogger().info("Coordonnée X : string(" + CoordonneesPoint2[0] + ") / double(" + this.p2x + ")");
+				getLogger().info("Coordonnée Y : string(" + CoordonneesPoint2[1] + ") / double(" + this.p2y + ")");
 			
-				ScriptKuka MonScriptKuka = new ScriptKuka(this.p1x, this.p1y, this.p2x, this.p2y);
+				MonScriptKuka.GetLine(this.p1x, this.p1y, this.p2x, this.p2y);
 				MonScriptKuka.runApplication();
 			}
 		}
-		System.out.println("Fin TraitementTrame\n");
+		getLogger().info("Fin TraitementTrame\n");
 	}
 	//****************************************************************//
 
@@ -112,7 +126,7 @@ public class SocketTrameParsing {
 
 		// Boucle infinie récupérant les informations dans le socket
 		while(MyServer.isConnected()){
-			System.out.println("toto 1");
+			getLogger().info("Boucle infinie");
 			
 			// Récupération de la trame sur le serveur
 			this.Trame = MyServer.getTrame();
@@ -127,15 +141,25 @@ public class SocketTrameParsing {
 
 			// Si les deux trames sont différentes on effectue le traitement
 			if(this.Trame != null){
-				System.out.println("toto 2\nTrame : " + this.Trame + "\nAncienne Trame : " + AncienneTrame);
+				getLogger().info("Trame != null\nTrame : " + this.Trame + "\nAncienne Trame : " + AncienneTrame);
 				if(!(AncienneTrame.equals(this.Trame))){
-					//System.out.println("toto 3");
+					//getLogger().info("toto 3");
 					//MonParsing.Trame = "LINE:1.21;1:2.02;2.8";
-					//System.out.println(this.Trame);
+					//getLogger().info(this.Trame);
 					this.TraitementTrame();
 					AncienneTrame = this.Trame;
 				}
 			}
 		}
+	}
+
+	public void initialize() {
+		getLogger().info("Init");
+	}
+	
+	@Override
+	public void run() {
+		// TODO Stub de la méthode généré automatiquement
+		getLogger().info("toto");
 	}
 }

@@ -166,6 +166,15 @@
                     </redundancy>
                 </redundancyData>
             </frame>
+            <frame name="OnPaper">
+                <transformation a="-1.5" b="1.2" c="-2.6" x="48.4" y="149.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1443620268299"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                </redundancyData>
+            </frame>
         </frame>
         <frame name="ToolTeaching">
             <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>

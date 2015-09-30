@@ -1,5 +1,11 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.File;
+import java.io.IOException;
+
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
@@ -15,6 +21,8 @@ import com.kuka.roboticsAPI.motionModel.Spline;
 public class ScriptKuka extends RoboticsAPIApplication {
 
 	private double p1x,p2x,p1y,p2y;
+	private boolean ModeEcriture = false;
+	double velocity = 0.2;
 	
 	private Controller kuka_Sunrise_Cabinet_1;
 	private LBR lbr_iiwa_14_R820_1;
@@ -26,16 +34,43 @@ public class ScriptKuka extends RoboticsAPIApplication {
 	
 	private ObjectFrame nearPaper0;
 	private ObjectFrame paperApproach;
+	private ObjectFrame OnPaper;
 	
 	private BezierCurve curve;
 	private Vector2[] trajectory;
 	private Frame[] frames;
 	
-	public ScriptKuka(double _p1x, double _p1y, double _p2x, double _p2y){
+	public void GetLine(double _p1x, double _p1y, double _p2x, double _p2y){
 		this.p1x = _p1x;
 		this.p2x = _p2x;
 		this.p1y = _p1y;
 		this.p2y = _p2y;
+	}
+	
+	public ScriptKuka(){
+		
+		this.p1x = 0.0;
+		this.p2x = 0.0;
+		this.p1y = 0.0;
+		this.p2y = 0.0;
+		
+		/*try {
+			BufferedReader bf = new BufferedReader(new FileReader(new File("C:\\KukaScript.conf")));
+			String toto = bf.readLine();
+			String[] Parts = toto.split("=");
+			System.out.println("Fichier conf (ModeEcriture) --> " + Parts[1]);
+			if(Parts[1] == "true" || Parts[1] == "True" || Parts[1] == "1"){
+				this.ModeEcriture = true;
+			}else{
+				this.ModeEcriture = false;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
+		}*/
 	}
 	
 	private Transformation getTranslationFromFrame(Frame frameBefore, Frame frameDestination)
@@ -61,6 +96,7 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		
 		nearPaper0 = getApplicationData().getFrame("/Paper/NearPaper0");
 		paperApproach = getApplicationData().getFrame("/Paper/PaperApproach");
+		OnPaper = getApplicationData().getFrame("/Paper/OnPaper");
 	
 		// On crée un courbe proche d'un sinus
 		Vector2 p0 = new Vector2();
@@ -92,18 +128,22 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		}
 	}
 	
+	public void ApprochePaper(){
+		
+		// On approche la base "Paper"
+		penToolTCP.move(ptp(paperApproach).setJointVelocityRel(velocity));
+				
+		penToolTCP.move(lin(nearPaper0).setJointVelocityRel(velocity));
+	}
+	
 	//****************************** RUN **************************//
 	public void run() {
 		// TODO Stub de la méthode généré automatiquement
 		lbr_iiwa_14_R820_1.move(ptpHome());
 		
-		double velocity = 0.2;
-		
-		// On approche la base "Paper"
-		penToolTCP.move(ptp(paperApproach).setJointVelocityRel(velocity));
-		
-		penToolTCP.move(lin(nearPaper0).setJointVelocityRel(velocity));
-		
+		if(ModeEcriture){
+			penToolTCP.move(lin(OnPaper).setJointVelocityRel(velocity));
+		}
 		
 		// On crée notre spline avec des mouvements relatifs linéaire dans la base "Paper"
 		// Dans cet exemple :
