@@ -14,6 +14,7 @@ public class SocketTrameParsing {
 	private double p2y;
 
 	private Server MyServer;
+	private ScriptKuka MonScriptKuka;
 
 	//************************** CONSTRUCTEUR ************************//
 	public SocketTrameParsing(Server ServerParametre){
@@ -21,6 +22,7 @@ public class SocketTrameParsing {
 		System.out.println("Démarrage Construteur ...");
 
 		this.MyServer = ServerParametre;
+		this.MonScriptKuka = new ScriptKuka();
 
 		// Initialisation des coordonnées des différents points
 		this.p1x = 0.0;
@@ -54,6 +56,7 @@ public class SocketTrameParsing {
 
 		if (positionOrdreSTART != -1){
 			System.out.println("Reçu START");
+			this.MonScriptKuka.ApprochePaper();
 			StopTrame = false;
 		}
 
@@ -96,7 +99,7 @@ public class SocketTrameParsing {
 				System.out.println("Coordonnée X : string(" + CoordonneesPoint2[0] + ") / double(" + this.p2x + ")");
 				System.out.println("Coordonnée Y : string(" + CoordonneesPoint2[1] + ") / double(" + this.p2y + ")");
 			
-				ScriptKuka MonScriptKuka = new ScriptKuka(this.p1x, this.p1y, this.p2x, this.p2y);
+				MonScriptKuka.GetLine(this.p1x, this.p1y, this.p2x, this.p2y);
 				MonScriptKuka.runApplication();
 			}
 		}
@@ -112,7 +115,7 @@ public class SocketTrameParsing {
 
 		// Boucle infinie récupérant les informations dans le socket
 		while(MyServer.isConnected()){
-			System.out.println("toto 1");
+			System.out.println("Boucle infinie");
 			
 			// Récupération de la trame sur le serveur
 			this.Trame = MyServer.getTrame();
@@ -127,7 +130,7 @@ public class SocketTrameParsing {
 
 			// Si les deux trames sont différentes on effectue le traitement
 			if(this.Trame != null){
-				System.out.println("toto 2\nTrame : " + this.Trame + "\nAncienne Trame : " + AncienneTrame);
+				System.out.println("Trame != null\nTrame : " + this.Trame + "\nAncienne Trame : " + AncienneTrame);
 				if(!(AncienneTrame.equals(this.Trame))){
 					//System.out.println("toto 3");
 					//MonParsing.Trame = "LINE:1.21;1:2.02;2.8";
