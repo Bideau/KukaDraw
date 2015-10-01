@@ -35,7 +35,7 @@ class Connexion implements Runnable{
 		try {
 			while(true){
 				ligne = in.readLine();
-				serveur.propage(ligne);
+				//serveur.propage(ligne);
 				if((ligne == null)||(ligne.equals("fin"))){
 					break;
 				}
@@ -57,7 +57,7 @@ class Connexion implements Runnable{
 					System.out.println("Fermeture connexion");
 				}
 			} catch (IOException e) {}
-			serveur.jePars(this);
+			//serveur.jePars(this);
 		} // fin finally
 	}
 

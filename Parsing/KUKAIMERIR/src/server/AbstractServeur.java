@@ -9,10 +9,12 @@ import java.net.Socket;
 import java.net.ServerSocket;
 import java.util.Vector;
 
+import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+
 import server.Connexion;
 
 
-public abstract class AbstractServeur extends Thread
+public abstract class AbstractServeur extends RoboticsAPIApplication
 {
     int port;
     ServerSocket srv;
@@ -20,12 +22,16 @@ public abstract class AbstractServeur extends Thread
     protected Vector <Connexion>lesPresents;
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
-    AbstractServeur(int port)
+    public AbstractServeur(){
+    	this(30002);
+    }
+    public AbstractServeur(int port)
     {
-        this.port=port;
+    	getLogger().info("Constructeur Serveur Abstract");
+    	this.port=port;
         this.client=null;
         this.srv=null;
-        this.start();
+        //this.run();
         lesPresents=new Vector<Connexion>();
     }
     ///////////////////////////////////////////////
@@ -33,11 +39,14 @@ public abstract class AbstractServeur extends Thread
     public abstract void startThreadServer(Socket s);
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
+    public void initialize() {
+    	getLogger().info("Init Serveur Abstract");
+    }
     public void run()    {
-    	
+    	getLogger().info("Run Serveur Abstract");
         try
         {
-            System.out.println("Serveur TCP sur le port "+port+"...");
+        	getLogger().info("Serveur TCP sur le port "+port+"...");
             srv =new ServerSocket(port);
             //srv.setSoTimeout(10000);
             while(true){
@@ -46,16 +55,17 @@ public abstract class AbstractServeur extends Thread
                 //Prob
                 lesPresents.addElement(new Connexion(this, srv.accept()));
         		(new Thread((Connexion)lesPresents.lastElement())).start();
-			      System.out.println("Connexion entrante sur le port " + port);
+        		getLogger().info("Connexion entrante sur le port " + port);
                 
            }
         }
         catch(Exception e)
         {
-            System.err.println("Arret du serveur.");
+        	getLogger().error("Arret du serveur.");
             System.err.println(e);
         }
     }
+    /*
     public void ecoute() {
 		try{
 			while(true){
@@ -68,6 +78,6 @@ public abstract class AbstractServeur extends Thread
             System.err.println(e.getMessage());
             System.exit(1);
         } // fin catch
-	}
+	}*/
    
 }

@@ -11,8 +11,9 @@ public class AuthThread extends AbstractAuthThread
 {
 	private String fichier="users.txt";
 	
-	AuthThread(Socket client) {
+	public AuthThread(Socket client) {
 		super(client);
+		getLogger().info("Constructeur Thread");
 	}
 
 	 /*

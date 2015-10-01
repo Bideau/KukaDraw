@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.print.Paper;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -101,6 +102,7 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		// On crée un courbe proche d'un sinus
 		Vector2 p0 = new Vector2();
 		Vector2 p1 = new Vector2();
+		
 		//Vector2 p2 = new Vector2();
 		//Vector2 p3 = new Vector2();
 		
@@ -128,6 +130,8 @@ public class ScriptKuka extends RoboticsAPIApplication {
 	}
 	
 	public void ApprochePaper(){
+		// TODO Stub de la méthode généré automatiquement
+		//lbr_iiwa_14_R820_1.move(ptpHome());
 		
 		// On approche la base "Paper"
 		penToolTCP.move(ptp(paperApproach).setJointVelocityRel(velocity));
