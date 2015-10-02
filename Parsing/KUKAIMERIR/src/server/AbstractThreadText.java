@@ -34,9 +34,9 @@ public abstract class AbstractThreadText extends RoboticsAPIApplication
     ///////////////////////////////////////////////
     public AbstractThreadText(Socket client)
     {
-    	getLogger().info("Connexion depuis "+client.getInetAddress()+":"+client.getPort()+"...");
+    	System.out.println("Connexion depuis "+client.getInetAddress()+":"+client.getPort()+"...");
         initStreams(client);
-        this.run();
+        
     }
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
@@ -52,10 +52,9 @@ public abstract class AbstractThreadText extends RoboticsAPIApplication
         {
             //System.err.println(e);
             e.printStackTrace();
+        }finally {
+        	this.run();
         }
-    }
-    public void initialize() {
-    	   
     }
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////

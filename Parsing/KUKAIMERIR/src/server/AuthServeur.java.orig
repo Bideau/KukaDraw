@@ -42,10 +42,14 @@ public class AuthServeur extends AbstractServeur
 				e.envoie(ligne);
     	}
     }*/
-
+    
     public void run() {
+<<<<<<< HEAD
+    	
+=======
     	getLogger().info("RUN Serveur");
     	super.run();
+>>>>>>> 35b37052f607fb4e8524ca7e29e5ebdfccc0aa0f
     }
     /*
     public static void main(String[] args){
