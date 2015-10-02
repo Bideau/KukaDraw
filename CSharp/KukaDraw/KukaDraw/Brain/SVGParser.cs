@@ -13,24 +13,24 @@ namespace KukaDraw.Brain
 {
     class SVGParser
     {
-        private ArrayList pointArray;
+        private string[] dataList;
+        private string data;
+        string isEmpty = "";
+
         public SVGParser()
         {
-            this.pointArray = new ArrayList();
+            this.dataList = null;
+            this.data = null;
         }
 
-        public ArrayList GetPointArray()
+        public string[] GetDataList()
         {
-            return pointArray;
+            return dataList;
         }
 
-        public void SetPointArray(ArrayList ArrayPoint)
+        public void SetDataList(string[] dataList)
         {
-            this.pointArray = ArrayPoint;
-        }
-        public void addPoint(PointF point)
-        {
-            this.pointArray.Add(point);
+            this.dataList = dataList;
         }
         public void SvgXmlReader(Stream xmlStream)
         {
@@ -45,7 +45,57 @@ namespace KukaDraw.Brain
 
             foreach (XmlElement node in doc.GetElementsByTagName("path"))
             {
-                Console.WriteLine(node.GetAttribute("d"));
+                //Console.WriteLine(node.GetAttribute("d") + " titi " + "\n");
+                this.data = this.data + " " + node.GetAttribute("d");
+            }
+            //suppression de tout les z dans les data
+            this.data = this.data.Replace("z", isEmpty);
+            this.data = this.data.Replace("Z", isEmpty);
+            this.data = this.data.Replace("\n", " ");
+            this.data = this.data.Replace(",", " ");
+            
+            //Console.WriteLine(this.data);
+
+        }
+        public string addSeparator(string chain)
+        {
+            string tmpChain = null;
+
+            tmpChain = chain[0] + " ";
+
+            for (int i = 1; i < chain.Length; i++)
+            {
+                if (chain[i].Equals('m') || chain[i].Equals('M') || chain[i].Equals('c') || chain[i].Equals('C') || chain[i].Equals('l') || chain[i].Equals('L'))
+                {
+                    tmpChain = tmpChain + chain[i] + " ";
+                }
+                else
+                {
+                    tmpChain = tmpChain + chain[i];
+                }
+            }
+            return tmpChain;
+        }
+
+        public void Parse()
+        {
+            string[] separator = {" "};
+            string[] separators = { "m", "M" };
+            string[] spliters = this.data.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+            string moveTo = null;
+            string tmp = null;
+
+            for (int i = 1; i < spliters.Length; i++)
+            {
+                moveTo = "m" + spliters[i];           
+                tmp = tmp + addSeparator(moveTo);
+            }
+
+           this.dataList = tmp.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < this.dataList.Length - 1; i++)
+            {
+                Console.WriteLine(this.dataList[i]);
             }
         }
     }

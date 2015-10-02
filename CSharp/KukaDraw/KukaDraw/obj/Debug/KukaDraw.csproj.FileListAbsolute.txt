@@ -10,3 +10,4 @@ C:\Users\christophe\Desktop\projet integration 3A\KukaDraw\CSharp\KukaDraw\KukaD
 C:\Users\christophe\Desktop\projet integration 3A\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.OpenSVGForm.resources
 C:\Users\christophe\Desktop\projet integration 3A\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.exe
 C:\Users\christophe\Desktop\projet integration 3A\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.pdb
+C:\Users\christophe\Desktop\projet integration 3A\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.Painter.resources
