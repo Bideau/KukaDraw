@@ -6,7 +6,9 @@ import java.io.PrintStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.net.Socket;
-public abstract class AbstractThreadText extends Thread
+
+import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+public abstract class AbstractThreadText extends RoboticsAPIApplication
 {
     Socket sock=null;
     PrintStream out=null;
@@ -14,11 +16,11 @@ public abstract class AbstractThreadText extends Thread
     ///////////////////////////////////////////////
     // Pour un client
     ///////////////////////////////////////////////
-    AbstractThreadText(String host,int port)
+    public AbstractThreadText(String host,int port)
     {
         try
         {
-            System.out.println("Connexion vers "+host+":"+port+"...");
+        	getLogger().info("Connexion vers "+host+":"+port+"...");
             initStreams(new Socket(host,port));
         }
         catch (Exception e)
@@ -30,10 +32,11 @@ public abstract class AbstractThreadText extends Thread
     ///////////////////////////////////////////////
     // Pour un serveur
     ///////////////////////////////////////////////
-    AbstractThreadText(Socket client)
+    public AbstractThreadText(Socket client)
     {
-        System.out.println("Connexion depuis "+client.getInetAddress()+":"+client.getPort()+"...");
+    	getLogger().info("Connexion depuis "+client.getInetAddress()+":"+client.getPort()+"...");
         initStreams(client);
+        this.run();
     }
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
@@ -51,13 +54,16 @@ public abstract class AbstractThreadText extends Thread
             e.printStackTrace();
         }
     }
+    public void initialize() {
+    	   
+    }
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
     public void close()
     {
         try
         {
-            System.out.println("Fermeture de la connexion...");
+        	getLogger().info("Fermeture de la connexion...");
             if (sock!=null)
             {
                 sock.close();

@@ -8,14 +8,20 @@ import server.Connexion;
 public class AuthServeur extends AbstractServeur
 {
 	
-    AuthServeur() {
-    	super(30002);
+    public AuthServeur() {
+//    	super();
+    	super(30006);
+    	getLogger().info("Constructeur Serveur");
     }
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
+    public void initialize() {
+    	getLogger().info("Init Serveur");
+    }
+    
     public void startThreadServer(Socket s) {
         AuthThread t=new AuthThread(s);
-        t.start();
+        t.run();
     }
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
@@ -39,6 +45,9 @@ public class AuthServeur extends AbstractServeur
     
     public void run() {
     	
+    public void run() {
+    	getLogger().info("RUN Serveur");
+    	super.run();
     }
     /*
     public static void main(String[] args){

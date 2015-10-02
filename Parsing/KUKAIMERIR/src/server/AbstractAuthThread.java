@@ -5,7 +5,7 @@ import java.net.Socket;
 import Parsing.SocketTrameParsing;
 public abstract class AbstractAuthThread extends AbstractThreadText
 {
-	AbstractAuthThread(Socket client) {
+	public AbstractAuthThread(Socket client) {
 		super(client);
 	}
 	//	public abstract boolean verifUser(String user);
@@ -31,8 +31,9 @@ public abstract class AbstractAuthThread extends AbstractThreadText
 				out.println("OK"); // --> vers le client !
 			}
 		}*/
-		
-		SocketTrameParsing myParse=new SocketTrameParsing(new Server(in));
+		getLogger().info("toto");
+		Server tmp = new Server (in);
+		SocketTrameParsing myParse=new SocketTrameParsing(tmp);
 		myParse.trameStart();
 	}
 }

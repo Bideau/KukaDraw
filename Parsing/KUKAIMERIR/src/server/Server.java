@@ -16,11 +16,14 @@ public class Server {
 	public String getTrame(){
 		String tmp=null;
 		try {
-			tmp = in.readLine();
-			if (tmp !=null){
-				if (tmp.equals("DISCONNECTED")){
-					System.out.println("Test");
-					disco=false;
+			if (in != null){
+				tmp = in.readLine();
+				if (tmp !=null){
+					if (tmp.equals("DISCONNECTED")){
+						System.out.println("Test");
+						disco=false;
+						
+					}
 				}
 			}
 
