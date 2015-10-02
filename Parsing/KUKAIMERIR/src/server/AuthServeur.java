@@ -19,6 +19,7 @@ public class AuthServeur extends AbstractServeur
     }
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
+    /*
     public synchronized void jePars(Connexion cx){
         System.out.println("\n Avant: " + lesPresents.toString());
         if (cx == null)
@@ -34,10 +35,14 @@ public class AuthServeur extends AbstractServeur
     	for (Connexion e : lesPresents){
 				e.envoie(ligne);
     	}
-    }
+    }*/
     
+    public void run() {
+    	
+    }
+    /*
     public static void main(String[] args){
         new AuthServeur();
         
-    }
+    }*/
 }

@@ -56,6 +56,7 @@ public abstract class AbstractServeur extends Thread
             System.err.println(e);
         }
     }
+    /*
     public void ecoute() {
 		try{
 			while(true){
@@ -68,6 +69,6 @@ public abstract class AbstractServeur extends Thread
             System.err.println(e.getMessage());
             System.exit(1);
         } // fin catch
-	}
+	}*/
    
 }
