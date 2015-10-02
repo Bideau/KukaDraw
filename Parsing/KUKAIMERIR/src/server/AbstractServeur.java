@@ -53,8 +53,9 @@ public abstract class AbstractServeur extends RoboticsAPIApplication
                 client=srv.accept();
                 startThreadServer(client);
                 //Prob
+                /*
                 lesPresents.addElement(new Connexion(this, srv.accept()));
-        		(new Thread((Connexion)lesPresents.lastElement())).start();
+        		(new Thread((Connexion)lesPresents.lastElement())).start();*/
         		getLogger().info("Connexion entrante sur le port " + port);
                 
            }
