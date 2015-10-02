@@ -22,6 +22,7 @@ namespace KukaDraw.IHM
     {
         private string pathFile;
         private SvgDocument svgFile;
+        SVGParser parser = new SVGParser();
        
         
         public OpenSVGForm()
@@ -33,7 +34,6 @@ namespace KukaDraw.IHM
         private void bOpen_Click(object sender, EventArgs e)
         {
             Stream myStream = null;
-            SVGParser parser = new SVGParser();
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.InitialDirectory = "c:\\";
             fileDialog.DefaultExt = ".svg";
@@ -52,7 +52,7 @@ namespace KukaDraw.IHM
                             this.tbPathFile.Text = this.pathFile;
                             this.svgFile = SvgDocument.Open(pathFile);
                             this.pbFileSVG.Image = this.svgFile.Draw();
-                            parser.SvgXmlReader(myStream);                        
+                            this.parser.SvgXmlReader(myStream);                        
                         }
                     }
                 }
@@ -66,7 +66,7 @@ namespace KukaDraw.IHM
 
         private void bDraw_Click(object sender, EventArgs e)
         {
-
+            this.parser.Parse();
         }
     }
 }
