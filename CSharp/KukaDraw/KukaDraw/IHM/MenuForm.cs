@@ -33,5 +33,11 @@ namespace KukaDraw.IHM
             openSVG.Show();
 
         }
+
+        private void bDraw_Click(object sender, EventArgs e)
+        {
+            Painter painter = new Painter();
+            painter.Show();
+        }
     }
 }

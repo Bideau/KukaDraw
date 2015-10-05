@@ -28,85 +28,71 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.pPainter = new System.Windows.Forms.Panel();
             this.bDraw = new System.Windows.Forms.Button();
             this.bClear = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // pPainter
+            // 
+            this.pPainter.BackColor = System.Drawing.Color.White;
+            this.pPainter.Location = new System.Drawing.Point(13, 13);
+            this.pPainter.Name = "pPainter";
+            this.pPainter.Size = new System.Drawing.Size(1154, 816);
+            this.pPainter.TabIndex = 0;
+            this.pPainter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseDown);
+            this.pPainter.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseMove);
+            this.pPainter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseUp);
             // 
             // bDraw
             // 
-            this.bDraw.Location = new System.Drawing.Point(6, 19);
+            this.bDraw.Location = new System.Drawing.Point(1174, 13);
             this.bDraw.Name = "bDraw";
-            this.bDraw.Size = new System.Drawing.Size(133, 44);
-            this.bDraw.TabIndex = 0;
+            this.bDraw.Size = new System.Drawing.Size(188, 97);
+            this.bDraw.TabIndex = 1;
             this.bDraw.Text = "Dessiner";
             this.bDraw.UseVisualStyleBackColor = true;
-            this.bDraw.Click += new System.EventHandler(this.bDraw_Click);
             // 
             // bClear
             // 
-            this.bClear.Location = new System.Drawing.Point(6, 69);
+            this.bClear.Location = new System.Drawing.Point(1173, 116);
             this.bClear.Name = "bClear";
-            this.bClear.Size = new System.Drawing.Size(133, 44);
-            this.bClear.TabIndex = 1;
+            this.bClear.Size = new System.Drawing.Size(188, 97);
+            this.bClear.TabIndex = 2;
             this.bClear.Text = "Effacer";
             this.bClear.UseVisualStyleBackColor = true;
-            this.bClear.Click += new System.EventHandler(this.bClear_Click);
             // 
             // bSave
             // 
-            this.bSave.Location = new System.Drawing.Point(6, 119);
+            this.bSave.Location = new System.Drawing.Point(1174, 219);
             this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(133, 44);
+            this.bSave.Size = new System.Drawing.Size(188, 97);
             this.bSave.TabIndex = 3;
             this.bSave.Text = "Sauvgarder";
             this.bSave.UseVisualStyleBackColor = true;
-            this.bSave.Click += new System.EventHandler(this.bSave_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(13, 13);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(891, 630);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Zone de dessin";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.bSave);
-            this.groupBox2.Controls.Add(this.bDraw);
-            this.groupBox2.Controls.Add(this.bClear);
-            this.groupBox2.Location = new System.Drawing.Point(910, 13);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(145, 630);
-            this.groupBox2.TabIndex = 5;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Commande";
             // 
             // Painter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1063, 652);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(1375, 851);
+            this.Controls.Add(this.bSave);
+            this.Controls.Add(this.bClear);
+            this.Controls.Add(this.bDraw);
+            this.Controls.Add(this.pPainter);
             this.Name = "Painter";
             this.Text = "Painter";
-            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
+        private System.Windows.Forms.Panel pPainter;
         private System.Windows.Forms.Button bDraw;
         private System.Windows.Forms.Button bClear;
         private System.Windows.Forms.Button bSave;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
+
     }
 }
