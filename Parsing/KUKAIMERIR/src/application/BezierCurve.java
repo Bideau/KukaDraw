@@ -31,7 +31,7 @@ public class BezierCurve {
 	    result.y = minusStep3 * points[0].y + _3minusStep * points[1].y;
 	        //+ _3step2 * points[2].y + step3 * points[3].y;
 	    
-	    result.z = points[0].z;
+	    result.z = minusStep3 * points[0].z + _3minusStep * points[1].z;
 	    	    
 	    return result;
 	}

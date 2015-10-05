@@ -15,10 +15,12 @@ import com.kuka.roboticsAPI.motionModel.Spline;
 public class ScriptKuka extends RoboticsAPIApplication {
 
 	// D�claration des points uitlis� pour les vectors
-	private double p1x,p2x,p1y,p2y,p2xOld,p2yOld;
+	public double p1x,p2x,p1y,p2y,p1z,p2z,p2xOld,p2yOld,p2zOld;
 	// Rapidit� : 0.2 --> 20%
 	double velocity = 0.2;
-	private boolean HaveLine = false;
+	public boolean HaveLine = false;
+	public boolean OutPaper = false;
+	public boolean OnPaper = false;
 
 	private Controller kuka_Sunrise_Cabinet_1;
 	private LBR lbr_iiwa_14_R820_1;
@@ -35,15 +37,17 @@ public class ScriptKuka extends RoboticsAPIApplication {
 	private Vector2[] trajectory;
 	private Frame[] frames;
 
-	public void GetLine(double _p1x, double _p1y, double _p2x, double _p2y){
+	public void GetLine(double _p1x, double _p1y, double _p2x, double _p2y, double _p1z, double _p2z){
 
 		// Affecte les valeurs recuperees lors du Parsing de la trame renvoy�es par le Serveur
 		this.p1x = _p1x;
 		this.p2x = _p2x;
 		this.p1y = _p1y;
 		this.p2y = _p2y;
+		this.p1z = _p1z;
+		this.p2z = _p2z;
 		HaveLine = true;
-
+		System.out.println(this.p1x + " " + this.p1y + " " + this.p1z + " " + this.p2x + " " + this.p2y + " " + this.p2z);
 		System.out.println("GETLINE FINIT");
 	}
 
@@ -55,8 +59,11 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		this.p2x = 0.0;
 		this.p1y = 0.0;
 		this.p2y = 0.0;
+		this.p1z = 0.0;
+		this.p2z = 0.0;
 		this.p2xOld = 0.0;
 		this.p2yOld = 0.0;
+		this.p2zOld = 0.0;
 
 		kuka_Sunrise_Cabinet_1 = getController("KUKA_Sunrise_Cabinet_1");
 		lbr_iiwa_14_R820_1 = (LBR) getDevice(kuka_Sunrise_Cabinet_1,"LBR_iiwa_14_R820_1");
@@ -106,36 +113,26 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		// On affecte les valeurs re�u dans le vector pour le tracage du Kuka
 		p0.x = this.p1x;
 		p0.y = this.p1y;
+		p0.z = this.p1z;
 
 		p1.x = this.p2x;
 		p1.y = this.p2y;
-
-		// Dans le cas ou le deuxi�me point du dernier mouvement est le m�me que le premier nouveau point ...
-		// ... on ne releve pas la pointe du stylo pour continuer de dessiner.
-
-		if(HaveLine){
-			System.out.println("HaveLine");
-			if(this.p1x == this.p2xOld && this.p1y == this.p2yOld){
-				System.out.println("Go Papier");
-				p0.z = 0;
-				p1.z = 50;
-			}else{
-				System.out.println("Out Paper");
-				p0.z = 0;
-				p1.z = 50;
-			}
-		}
+		p1.z = this.p2z;
 
 		curve = new BezierCurve(p0, p1);
 		System.out.println("BEZIER CURVE");
+		
+		System.out.println("Curve : " + curve.points[0].x + "  " + curve.points[0].y + "  " + curve.points[0].z);
+		System.out.println("Curve : " + curve.points[1].x + "  " + curve.points[1].y + "  " + curve.points[1].z);
 
 		trajectory = curve.getTrajectory(2);
-		System.out.println("GETTRAJECTORY");
+		System.out.println("GET TRAJECTORY");
 
 		// On cr�e des frames robot Kuka depuis notre courbe
 		frames = new Frame[trajectory.length];
 		for (int i=0; i < trajectory.length; i++){
 			frames[i] = new Frame(trajectory[i].x, trajectory[i].y, trajectory[i].z);
+			System.out.println(trajectory[i].x + "  " + trajectory[i].y + "  " + trajectory[i].z);
 		}
 		System.out.println("END INITIALIZE");
 	}
@@ -159,9 +156,9 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		RelativeLIN [] splineArray = new RelativeLIN[frames.length-1];
 
 		for (int i=0; i < frames.length-1; i++){
-			System.out.println("X" + frames[i].getX());
-			System.out.println("Y" + frames[i].getY());
-			System.out.println("Z" + frames[i].getZ());
+			System.out.println(i + " X : " + frames[i].getX());
+			System.out.println(i + " Y : " + frames[i].getY());
+			System.out.println(i + " Z : " + frames[i].getZ());
 			RelativeLIN moveLin = linRel(getTranslationFromFrame(frames[i], frames[i+1]),paperBase);
 			splineArray[i] = moveLin;
 		}
@@ -171,11 +168,13 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		System.out.println("END SPLINE");
 
 		long start, end;
-
+		
 		// On lance le mouvement 
 		start = System.currentTimeMillis();
 		System.out.println("1");
+		System.out.println(velocity);
 		penToolTCP.move(linMovement.setJointVelocityRel(velocity));
+		//penToolTCP.
 		System.out.println("2");
 		end = System.currentTimeMillis();
 		System.out.println("3");
@@ -188,6 +187,8 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		// On sauvegarde le second point pour test avec prochaine mouvement
 		this.p2xOld = this.p2x;
 		this.p2yOld = this.p2y;
+		
+		//Thread.interrupted();
 	}
 	//*****************************************************************//
 }

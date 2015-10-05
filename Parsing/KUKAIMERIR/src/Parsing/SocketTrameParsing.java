@@ -11,12 +11,17 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 	private String Trame;
 
 	private boolean StopTrame = false;
+	private boolean Disconect = true;
+	private boolean StyloPointer = false;
 	//private boolean ValeurSimulee = false;
 
 	private double p1x;
 	private double p1y;
 	private double p2x;
 	private double p2y;
+	private double p1z;
+	private double p2z;
+	private double pPosx,pPosy,pPosz;
 
 	private Server MyServer;
 	private ScriptKuka MonScriptKuka;
@@ -37,8 +42,13 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 		// Initialisation des coordonn�es des diff�rents points
 		this.p1x = 0.0;
 		this.p1y = 0.0;
+		this.p1z = 0.0;
 		this.p2x = 0.0;
 		this.p2y = 0.0;
+		this.p2z = 0.0;
+		this.pPosx = 0.0;
+		this.pPosy = 0.0;
+		this.pPosz = 0.0;
 
 		// Initialisation de la trame de comunication
 		this.Trame = "Default";
@@ -110,7 +120,7 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 				System.out.println("Point 1 :");
 				System.out.println("Coordonnee X : string(" + CoordonneesPoint1[0] + ") / double(" + this.p1x + ")");
 				System.out.println("Coordonnee Y : string(" + CoordonneesPoint1[1] + ") / double(" + this.p1y + ")");
-				
+
 				// On parse les coordonn�es x et y du 2eme point
 				String[] CoordonneesPoint2 = GeneralParts[2].split(";");
 				System.out.println("SPLIT 2 ;");
@@ -124,17 +134,54 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 				System.out.println("Point 2 :");
 				System.out.println("Coordonnee X : string(" + CoordonneesPoint2[0] + ") / double(" + this.p2x + ")");
 				System.out.println("Coordonnee Y : string(" + CoordonneesPoint2[1] + ") / double(" + this.p2y + ")");
-				
-				System.out.println("AVANT GETLINE");
-				
-				MonScriptKuka.GetLine(this.p1x, this.p1y, this.p2x, this.p2y);
-				MonScriptKuka.runApplication();
 
+				System.out.println("AVANT GETLINE");
+
+				// Dans le cas ou le deuxi�me point du dernier mouvement est le m�me que le premier nouveau point ...
+				// ... on ne releve pas la pointe du stylo pour continuer de dessiner.
+
+				// Traitement des Z
+				// Modif Bideau
+
+				//System.out.println("HaveLine");
+				if((this.p1x == MonScriptKuka.p2xOld && this.p1y == MonScriptKuka.p2yOld) && MonScriptKuka.p2xOld != 0.0){
+					System.out.println("Go Paper");
+					p1z = 0.0;
+					p2z = 0.0;
+				}else{
+					System.out.println("Out Paper");
+					MonScriptKuka.OutPaper = true;
+					
+					//TraitementCoordonnees(pPosx,pPosy,pPosz,pPosx,pPosy,50);
+					System.out.println("TraitCoord 1");
+					this.pPosz = 50.0;
+					
+					TraitementCoordonnees(pPosx,pPosy,pPosz,p1x,p1y,50);
+					System.out.println("TraitCoord 2");
+					this.pPosx = this.p1x;
+					this.pPosy = this.p1y;
+					this.pPosz = this.p1z;
+					
+					TraitementCoordonnees(pPosx,pPosy,50,p1x,p1y,0);
+					System.out.println("TraitCoord 3");
+				}
+				
+				TraitementCoordonnees(p1x,p1y,p1z,p2x,p2y,p2z);
+				this.pPosx = this.p2x;
+				this.pPosy = this.p2y;
+				this.pPosz = this.p2z;
 			}
 		}
 		getLogger().info("Fin TraitementTrame\n");
 	}
 	//****************************************************************//
+
+	public void TraitementCoordonnees(double _p1x,double _p1y,double _p1z,double _p2x, double _p2y, double _p2z){
+
+		MonScriptKuka.GetLine(_p1x, _p1y, _p2x, _p2y, _p1z, _p2z);
+		MonScriptKuka.runApplication();
+	}
+
 
 	public void trameStart(){
 
@@ -143,7 +190,7 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 		String AncienneTrame = "";
 
 		// Boucle infinie r�cup�rant les informations dans le socket
-		while(true){
+		while(Disconect){
 			getLogger().info("Boucle infinie");
 			//System.out.println("...");
 
@@ -164,13 +211,17 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 				System.out.println("Trame != Null");
 				getLogger().info("Trame != null\nTrame : " + this.Trame + "\nAncienne Trame : " + AncienneTrame);
 				System.out.println("Trame != null\nTrame : " + this.Trame + "\nAncienne Trame : " + AncienneTrame);
-				if(!(AncienneTrame.equals(this.Trame))){
+
+				if(this.Trame == "DISCONNECTED"){
+					Disconect = false;
+				}else if(!(AncienneTrame.equals(this.Trame))){
 					System.out.println("Trame differente ancienne");
 					//getLogger().info("toto 3");
 					//MonParsing.Trame = "LINE:1.21;1:2.02;2.8";
 					//getLogger().info(this.Trame);
 					this.TraitementTrame();
 					AncienneTrame = this.Trame;
+					Trame=null;
 				}
 			}
 		}
