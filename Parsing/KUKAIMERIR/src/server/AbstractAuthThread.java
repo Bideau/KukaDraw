@@ -36,4 +36,9 @@ public abstract class AbstractAuthThread extends AbstractThreadText
 		SocketTrameParsing myParse=new SocketTrameParsing(tmp);
 		myParse.trameStart();
 	}
+
+	public void run() {
+		super.run();
+	}
+
 }

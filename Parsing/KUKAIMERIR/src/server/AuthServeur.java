@@ -10,7 +10,7 @@ public class AuthServeur extends AbstractServeur
 	
     public AuthServeur() {
 //    	super();
-    	super(30009);
+    	super(30006);
     	getLogger().info("Constructeur Serveur");
     }
     ///////////////////////////////////////////////
@@ -42,7 +42,7 @@ public class AuthServeur extends AbstractServeur
 				e.envoie(ligne);
     	}
     }*/
-    
+
     public void run() {
     	getLogger().info("RUN Serveur");
     	super.run();

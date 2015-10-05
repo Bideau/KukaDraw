@@ -1,12 +1,5 @@
 package application;
 
-import java.awt.print.Paper;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.File;
-import java.io.IOException;
-
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
@@ -21,59 +14,69 @@ import com.kuka.roboticsAPI.motionModel.Spline;
 
 public class ScriptKuka extends RoboticsAPIApplication {
 
-	private double p1x,p2x,p1y,p2y;
-	private boolean ModeEcriture = false;
+	// Dï¿½claration des points uitlisï¿½ pour les vectors
+	private double p1x,p2x,p1y,p2y,p2xOld,p2yOld;
+	// Rapiditï¿½ : 0.2 --> 20%
 	double velocity = 0.2;
-	
+	private boolean HaveLine = false;
+
 	private Controller kuka_Sunrise_Cabinet_1;
 	private LBR lbr_iiwa_14_R820_1;
 
 	private Tool penTool;
 	private ObjectFrame penToolTCP;
-	
+
 	private ObjectFrame paperBase;
-	
+
 	private ObjectFrame nearPaper0;
 	private ObjectFrame paperApproach;
-	private ObjectFrame OnPaper;
-	
+
 	private BezierCurve curve;
 	private Vector2[] trajectory;
 	private Frame[] frames;
-	
+
 	public void GetLine(double _p1x, double _p1y, double _p2x, double _p2y){
+
+		// Affecte les valeurs recuperees lors du Parsing de la trame renvoyï¿½es par le Serveur
 		this.p1x = _p1x;
 		this.p2x = _p2x;
 		this.p1y = _p1y;
 		this.p2y = _p2y;
+		HaveLine = true;
+
+		System.out.println("GETLINE FINIT");
 	}
-	
+
 	public ScriptKuka(){
-		
+
+		// Constructeur ...
+		// On initialise les variables
 		this.p1x = 0.0;
 		this.p2x = 0.0;
 		this.p1y = 0.0;
 		this.p2y = 0.0;
-		
-		/*try {
-			BufferedReader bf = new BufferedReader(new FileReader(new File("C:\\KukaScript.conf")));
-			String toto = bf.readLine();
-			String[] Parts = toto.split("=");
-			System.out.println("Fichier conf (ModeEcriture) --> " + Parts[1]);
-			if(Parts[1] == "true" || Parts[1] == "True" || Parts[1] == "1"){
-				this.ModeEcriture = true;
-			}else{
-				this.ModeEcriture = false;
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Bloc catch généré automatiquement
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Bloc catch généré automatiquement
-			e.printStackTrace();
-		}*/
+		this.p2xOld = 0.0;
+		this.p2yOld = 0.0;
+
+		kuka_Sunrise_Cabinet_1 = getController("KUKA_Sunrise_Cabinet_1");
+		lbr_iiwa_14_R820_1 = (LBR) getDevice(kuka_Sunrise_Cabinet_1,"LBR_iiwa_14_R820_1");
+		//  On crï¿½e l'outil stylo, on l'attache au flange et on rï¿½cupï¿½re le point en bout de stylo "penToolTCP"
+		penTool = getApplicationData().createFromTemplate("penTool");
+		//System.out.println("1");
+		penTool.attachTo(lbr_iiwa_14_R820_1.getFlange() );
+		//System.out.println("2");
+		penToolTCP = penTool.getFrame("/penToolTCP");
+		//System.out.println("3");
+		// On charge les points de l'application
+		paperBase = getApplicationData().getFrame("/Paper");
+		//System.out.println("4");
+
+		nearPaper0 = getApplicationData().getFrame("/Paper/NearPaper0");
+		paperApproach = getApplicationData().getFrame("/Paper/PaperApproach");
+
+		//System.out.println("END GETFRAME");
 	}
-	
+
 	private Transformation getTranslationFromFrame(Frame frameBefore, Frame frameDestination)
 	{
 		return Transformation.ofTranslation(
@@ -82,109 +85,109 @@ public class ScriptKuka extends RoboticsAPIApplication {
 				frameDestination.getZ()-frameBefore.getZ()
 				);
 	}
-	
+
+	public void ApprochePaper(){
+
+		// On approche la base "Paper"
+		penToolTCP.move(ptp(paperApproach).setJointVelocityRel(velocity));
+
+		penToolTCP.move(lin(nearPaper0).setJointVelocityRel(velocity));
+	}
+
 	public void initialize() {
-		kuka_Sunrise_Cabinet_1 = getController("KUKA_Sunrise_Cabinet_1");
-		lbr_iiwa_14_R820_1 = (LBR) getDevice(kuka_Sunrise_Cabinet_1,"LBR_iiwa_14_R820_1");
-		
-		//  On crée l'outil stylo, on l'attache au flange et on récupére le point en bout de stylo "penToolTCP"
-		penTool = getApplicationData().createFromTemplate("penTool");
-		penTool.attachTo(lbr_iiwa_14_R820_1.getFlange() );
-		penToolTCP = penTool.getFrame("/penToolTCP");
-		
-		// On charge les points de l'application
-		paperBase = getApplicationData().getFrame("/Paper");
-		
-		nearPaper0 = getApplicationData().getFrame("/Paper/NearPaper0");
-		paperApproach = getApplicationData().getFrame("/Paper/PaperApproach");
-		OnPaper = getApplicationData().getFrame("/Paper/OnPaper");
-	
-		// On crée un courbe proche d'un sinus
+
+		System.out.println("Initialize");
+
+		// On crï¿½e un courbe proche d'un sinus
 		Vector2 p0 = new Vector2();
 		Vector2 p1 = new Vector2();
 		
-		//Vector2 p2 = new Vector2();
-		//Vector2 p3 = new Vector2();
-		
+
+		// On affecte les valeurs reï¿½u dans le vector pour le tracage du Kuka
 		p0.x = this.p1x;
 		p0.y = this.p1y;
-		
+
 		p1.x = this.p2x;
 		p1.y = this.p2y;
-		
-		//p2.x = 160.0;
-		//p2.y = -100.0;
-		
-		//p3.x = 240.0;
-		//p3.y = 0.0;
 
-		curve = new BezierCurve(p0, p1/*, p2, p3*/);
-	
-		trajectory = curve.getTrajectory(20);
-		
-		// On crée des frames robot Kuka depuis notre courbe
+		// Dans le cas ou le deuxiï¿½me point du dernier mouvement est le mï¿½me que le premier nouveau point ...
+		// ... on ne releve pas la pointe du stylo pour continuer de dessiner.
+
+		if(HaveLine){
+			System.out.println("HaveLine");
+			if(this.p1x == this.p2xOld && this.p1y == this.p2yOld){
+				System.out.println("Go Papier");
+				p0.z = 0;
+				p1.z = 50;
+			}else{
+				System.out.println("Out Paper");
+				p0.z = 0;
+				p1.z = 50;
+			}
+		}
+
+		curve = new BezierCurve(p0, p1);
+		System.out.println("BEZIER CURVE");
+
+		trajectory = curve.getTrajectory(2);
+		System.out.println("GETTRAJECTORY");
+
+		// On crï¿½e des frames robot Kuka depuis notre courbe
 		frames = new Frame[trajectory.length];
 		for (int i=0; i < trajectory.length; i++){
-			frames[i] = new Frame(trajectory[i].x, trajectory[i].y, 0);
+			frames[i] = new Frame(trajectory[i].x, trajectory[i].y, trajectory[i].z);
 		}
+		System.out.println("END INITIALIZE");
 	}
-	
-	public void ApprochePaper(){
-		// TODO Stub de la méthode généré automatiquement
-		//lbr_iiwa_14_R820_1.move(ptpHome());
-		
-		// On approche la base "Paper"
-		penToolTCP.move(ptp(paperApproach).setJointVelocityRel(velocity));
-				
-		penToolTCP.move(lin(nearPaper0).setJointVelocityRel(velocity));
-	}
-	
+
 	//****************************** RUN **************************//
 	public void run() {
-		// TODO Stub de la méthode généré automatiquement
-		lbr_iiwa_14_R820_1.move(ptpHome());
-		
-		if(ModeEcriture){
-			penToolTCP.move(lin(OnPaper).setJointVelocityRel(velocity));
-		}
-		
-		// On crée notre spline avec des mouvements relatifs linéaire dans la base "Paper"
+		System.out.println("Run");
+		// TODO Stub de la mï¿½thode gï¿½nï¿½rï¿½ automatiquement
+		//lbr_iiwa_14_R820_1.move(ptpHome());
+
+		// On crï¿½e notre spline avec des mouvements relatifs linï¿½aire dans la base "Paper"
 		// Dans cet exemple :
-		// - On est au point nearPaper1, à 70mm au dessus du papier
+		// - On est au point nearPaper1, ï¿½ 70mm au dessus du papier
 		// - On a moins de 500 mouvements 
-		// - On crée les mouvements sans changer la translation sur l'axe Z
-		// - Si on veux réellement dessiner, il faudrait bouger en P0 puis créer la spline
-		
+		// - On crï¿½e les mouvements sans changer la translation sur l'axe Z
+		// - Si on veux rï¿½ellement dessiner, il faudrait bouger en P0 puis crï¿½er la spline
+
 		// Dans un cas ou il y a plus de 500 mouvements, il faut envoyer 500 mouvements par 500 mouvements :
 		// - Le bras ne prend pas plus de 500 mouvements par spline
-		
-		
+
 		RelativeLIN [] splineArray = new RelativeLIN[frames.length-1];
-		
+
 		for (int i=0; i < frames.length-1; i++){
+			System.out.println("X" + frames[i].getX());
+			System.out.println("Y" + frames[i].getY());
+			System.out.println("Z" + frames[i].getZ());
 			RelativeLIN moveLin = linRel(getTranslationFromFrame(frames[i], frames[i+1]),paperBase);
 			splineArray[i] = moveLin;
 		}
-		
+
 		Spline linMovement = new Spline(splineArray);
-		
+
+		System.out.println("END SPLINE");
+
 		long start, end;
-		
+
 		// On lance le mouvement 
 		start = System.currentTimeMillis();
+		System.out.println("1");
 		penToolTCP.move(linMovement.setJointVelocityRel(velocity));
+		System.out.println("2");
 		end = System.currentTimeMillis();
+		System.out.println("3");
 		getLogger().info("LIN Move time: " + (end - start));
-		
-		//On revient au départ
-		penToolTCP.move(lin(nearPaper0).setJointVelocityRel(velocity));
+		System.out.println("LIN Move time: " + (end - start));
+
+		//On revient au dï¿½part
+		//penToolTCP.move(lin(nearPaper0).setJointVelocityRel(velocity));
+
+		// On sauvegarde le second point pour test avec prochaine mouvement
+		this.p2xOld = this.p2x;
+		this.p2yOld = this.p2y;
 	}
 	//*****************************************************************//
-
-	/*
-	public static void main(String[] args) {
-		TestSpl app = new TestSpl();
-		app.runApplication();
-	}
-	*/
 }
