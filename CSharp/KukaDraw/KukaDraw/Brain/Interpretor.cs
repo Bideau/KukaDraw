@@ -70,22 +70,5 @@ namespace KukaDraw.Brain
                 }
             }
         }
-
-        private PointF[] listPointFToTabPointF(List<PointF> listPointF)
-        {
-            PointF[] tabPointF;
-            int cpt = 0;
-
-            tabPointF = new PointF[listPointF.Count];
-
-            foreach (PointF pointF in tabPointF)
-            {
-                tabPointF[cpt] = pointF;
-            }
-
-            return tabPointF;
-        }
-
-
     }
 }

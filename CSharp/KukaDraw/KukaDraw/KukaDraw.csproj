@@ -40,7 +40,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Com\" />
     <Folder Include="Core\" />
   </ItemGroup>
   <ItemGroup>
@@ -56,8 +55,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Brain\Bezier.cs" />
     <Compile Include="Brain\Interpretor.cs" />
+    <Compile Include="Brain\Order.cs" />
     <Compile Include="Brain\SVGParser.cs" />
+    <Compile Include="Com\ClientTcp.cs" />
     <Compile Include="IHM\MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>

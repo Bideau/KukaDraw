@@ -53,6 +53,7 @@
             this.bDraw.TabIndex = 1;
             this.bDraw.Text = "Dessiner";
             this.bDraw.UseVisualStyleBackColor = true;
+            this.bDraw.Click += new System.EventHandler(this.bDraw_Click_1);
             // 
             // bClear
             // 

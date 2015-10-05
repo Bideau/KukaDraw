@@ -23,7 +23,7 @@ namespace KukaDraw.IHM
         {
             InitializeComponent();
             g = pPainter.CreateGraphics();
-            
+
             tabpointF = new List<PointF>();
         }
 
@@ -61,18 +61,21 @@ namespace KukaDraw.IHM
 
                 //Setting the Pen BackColor and line Width
                 pen = new Pen(Color.Black, 1.0f);
-                //Pen p = new Pen(btn_PenColor.BackColor, float.Parse(cmb_PenSize.Text));
                 //Drawing the line.
                 PointF p1 = new PointF(initX ?? e.X, initY ?? e.Y);
                 tabpointF.Add(p1);
                 PointF p2 = new PointF(e.X, e.Y);
                 tabpointF.Add(p2);
-                Console.WriteLine("p1 = " + p1 + " p2 " + p2);
                 g.DrawLine(pen, p1, p2);
                 initX = e.X;
                 initY = e.Y;
                 //tabpointF.Add(new PointF(e.X, e.Y));
             }
+        }
+
+        private void bDraw_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
