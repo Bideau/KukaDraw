@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using KukaDraw.Brain;
 using KukaDraw.Com;
+using KukaDraw.Core;
 
 namespace KukaDraw.IHM
 {
-    public partial class Painter : Form
+    public partial class PainterRealTime : Form
     {
         private bool paint = false;
         private Graphics g;
@@ -22,8 +23,9 @@ namespace KukaDraw.IHM
         private Orders myOrder;
         private int? initX = null;
         private int? initY = null;
+        private Log toto = null;
 
-        public Painter(ClientTcp client)
+        public PainterRealTime(ClientTcp client)
         {
             InitializeComponent();
             this.g = this.pPainter.CreateGraphics();
@@ -32,30 +34,17 @@ namespace KukaDraw.IHM
             this.myClient = client;
         }
 
-        private void bDraw_Click(object sender, EventArgs e)
-        {
-            // envoyer le tableau à a order.
-            //this.myClient.Send(this.tabpointF.ToString());
-            
-            //this.myOrder.addOrder(this.tabpointF);
-            // envoyer les ordres au kuka
-            this.myOrder.giveOrders(this.myClient);
-        }
-
         private void bClear_Click(object sender, EventArgs e)
         {
             this.g.Clear(this.pPainter.BackColor);
             this.tabpointF.Clear();
         }
 
-        private void bSave_Click(object sender, EventArgs e)
-        {
-            // sauvgarder l'image.
-        }
-
         private void pPainter_MouseDown(object sender, MouseEventArgs e)
         {
             this.paint = true;
+            this.initX = null;
+            this.initY = null;
         }
 
         private void pPainter_MouseUp(object sender, MouseEventArgs e)
@@ -65,6 +54,9 @@ namespace KukaDraw.IHM
             this.initY = null;
             scaleTabPointF();
             this.myOrder.addOrder(this.tabpointF);
+            this.myOrder.giveOrders(this.myClient);
+            this.toto = new Log(this.tabpointF); //debug
+            this.tabpointF.Clear();
         }
 
         private void pPainter_MouseMove(object sender, MouseEventArgs e)
@@ -87,8 +79,6 @@ namespace KukaDraw.IHM
                 this.initX = e.X;
                 this.initY = e.Y;
             }
-            this.initX = null;
-            this.initY = null;
         }
 
         //fonction de scalling de l'ecrant sur la feuille du kuka
@@ -99,21 +89,12 @@ namespace KukaDraw.IHM
             foreach (PointF pointF in this.tabpointF)
             {
                 //invertion du y pour coller au repere de la feuille.
-                tmptabpointF.Add(new PointF((pointF.X / 4),(((840 - pointF.Y) / 4))));
+                tmptabpointF.Add(new PointF((pointF.X / 4), (((840 - pointF.Y) / 4))));
             }
             this.tabpointF = tmptabpointF;
-            showListePointF();
+            //showListePointF();
 
-            
-        }
 
-        //Fonction de debug qui affiche les valeur du tabpointF
-        public void showListePointF()
-        {
-            foreach (PointF pointF in this.tabpointF)
-            {
-                Console.WriteLine("x : {0} y : {1}", pointF.X, pointF.Y);
-            }
         }
     }
 }

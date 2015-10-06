@@ -21,7 +21,7 @@ namespace KukaDraw.IHM
         private SVGParser parser;
         private Interpretor interpretor;
         private ClientTcp myClient;
-        private Orders myOrder;
+        //private Orders myOrder;
 
        
         
@@ -32,7 +32,7 @@ namespace KukaDraw.IHM
             this.parser = new SVGParser();
             this.interpretor = new Interpretor();
             this.myClient = client;
-            this.myOrder = new Orders();
+            //this.myOrder = new Orders();
         }
 
         private void bOpen_Click(object sender, EventArgs e)
@@ -73,10 +73,13 @@ namespace KukaDraw.IHM
             this.parser.Parse();
             this.interpretor.interpretation(this.parser.GetDataList());
             // envoyer le tableau à a order.
-            this.myOrder.addOrder(this.interpretor.getTabPointF());
+            //this.myOrder.addOrder(this.interpretor.getTabPointF());
             // envoyer les ordres au kuka
-            this.myOrder.giveOrders(this.myClient);
+            //this.myOrder.giveOrders(this.myClient);
 
+            this.interpretor.myOrders.giveOrders(this.myClient);
+
+            this.interpretor.myOrders.numberOFOrders();
         }
     }
 }

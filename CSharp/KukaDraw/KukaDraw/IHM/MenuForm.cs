@@ -67,5 +67,11 @@ namespace KukaDraw.IHM
         {
 
         }
+
+        private void bDrawRealTime_Click(object sender, EventArgs e)
+        {
+            PainterRealTime painterRealTime = new PainterRealTime(this.client);
+            painterRealTime.Show();
+        }
     }
 }

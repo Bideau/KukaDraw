@@ -39,7 +39,7 @@
             this.pPainter.BackColor = System.Drawing.Color.White;
             this.pPainter.Location = new System.Drawing.Point(13, 13);
             this.pPainter.Name = "pPainter";
-            this.pPainter.Size = new System.Drawing.Size(1154, 816);
+            this.pPainter.Size = new System.Drawing.Size(1188, 840);
             this.pPainter.TabIndex = 0;
             this.pPainter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseDown);
             this.pPainter.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseMove);
@@ -47,7 +47,7 @@
             // 
             // bDraw
             // 
-            this.bDraw.Location = new System.Drawing.Point(1174, 13);
+            this.bDraw.Location = new System.Drawing.Point(1207, 13);
             this.bDraw.Name = "bDraw";
             this.bDraw.Size = new System.Drawing.Size(188, 97);
             this.bDraw.TabIndex = 1;
@@ -57,16 +57,17 @@
             // 
             // bClear
             // 
-            this.bClear.Location = new System.Drawing.Point(1173, 116);
+            this.bClear.Location = new System.Drawing.Point(1207, 116);
             this.bClear.Name = "bClear";
             this.bClear.Size = new System.Drawing.Size(188, 97);
             this.bClear.TabIndex = 2;
             this.bClear.Text = "Effacer";
             this.bClear.UseVisualStyleBackColor = true;
+            this.bClear.Click += new System.EventHandler(this.bClear_Click);
             // 
             // bSave
             // 
-            this.bSave.Location = new System.Drawing.Point(1174, 219);
+            this.bSave.Location = new System.Drawing.Point(1207, 219);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(188, 97);
             this.bSave.TabIndex = 3;
@@ -77,7 +78,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1375, 851);
+            this.ClientSize = new System.Drawing.Size(1406, 865);
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.bClear);
             this.Controls.Add(this.bDraw);

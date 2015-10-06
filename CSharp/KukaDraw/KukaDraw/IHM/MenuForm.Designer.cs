@@ -134,6 +134,7 @@
             this.bDrawRealTime.TabIndex = 2;
             this.bDrawRealTime.Text = "Dessin Temps réél";
             this.bDrawRealTime.UseVisualStyleBackColor = true;
+            this.bDrawRealTime.Click += new System.EventHandler(this.bDrawRealTime_Click);
             // 
             // bDraw
             // 
@@ -178,7 +179,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 326);
+            this.ClientSize = new System.Drawing.Size(514, 320);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.gbMenu);
             this.Controls.Add(this.groupBox1);

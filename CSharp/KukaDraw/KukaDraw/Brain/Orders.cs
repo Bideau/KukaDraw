@@ -93,5 +93,17 @@ namespace KukaDraw.Brain
                 index++;
             }
         }
+
+        // Print how many orders we have
+        public void numberOFOrders()
+        {
+            int index = 0;
+            foreach (string stg in orders)
+            {
+                index++;
+            }
+            Console.WriteLine("There are {0} orders.", index);
+        }
+
     }
 }
