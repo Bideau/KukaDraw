@@ -8,12 +8,13 @@ import application.ScriptKuka;
 public class SocketTrameParsing extends RoboticsAPIApplication {
 
 	private String Trame;
+	private final double ONPAPER=-3.0;
+	private final double OFFPAPER=15.0;
 
 	// Quand on recoit un STOP
 	private boolean StopTrame = false;
 	// Quand le serveur perd la connexion avec le client
 	private boolean Disconect = true;
-
 	private double p1x;
 	private double p1y;
 	private double p2x;
@@ -28,7 +29,7 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 	
 	//************************** CONSTRUCTEUR ************************//
 	public SocketTrameParsing(){
-		getLogger().info("Constructeur");
+		//getLogger().info("Constructeur");
 	}
 
 	public SocketTrameParsing(Server ServerParametre){
@@ -58,9 +59,9 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 	//***************************************************************//
 	
 	//********************** INITIALIZE ****************************//
-	public void initialize() {
+	/*public void initialize() {
 		
-	}
+	}*/
 	//**************************************************************//
 	
 	//*********************** TRAITEMENT TRAME *********************//
@@ -73,24 +74,23 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 
 		// Si on recoit STOP
 		if (positionOrdreSTOP != -1){
-			getLogger().info("Recu STOP");
 			System.out.println("Recu STOP");
+			this.MonScriptKuka.ApprochePaper(false);
 			StopTrame = true;
 		}
 
 		// Si on recoit START
 		if (positionOrdreSTART != -1){
 			getLogger().info("Recu START");
-			System.out.println("Recu START");
-			this.MonScriptKuka.initialize();
-			this.MonScriptKuka.ApprochePaper();
+			this.MonScriptKuka.ApprochePaper(true);
+			this.pPosx = MonScriptKuka.paperApproach.getX();
+			this.pPosy = MonScriptKuka.paperApproach.getY();
+			this.pPosz = MonScriptKuka.paperApproach.getZ();
 			StopTrame = false;
 		}
 
 		// Si on a recu un arret de lecture
-		if(StopTrame){
-			
-		}else{
+		if(!StopTrame){
 			// On recupere l'ordre donne par l'IHM
 			// On recherche LINE dans la chaine recupere
 			int positionOrdreLINE = this.Trame.indexOf("LINE");
@@ -100,10 +100,10 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 				// Chaine LINE trouve !
 				// On recherche les coordonnees des deux points
 				String[] GeneralParts = this.Trame.split(":");
-
+				/*
 				for(int i=0; i<GeneralParts.length; i++){
 					System.out.println("parts " + i + " : " + GeneralParts[i]);
-				}
+				}*/
 
 				// On parse les coordonn�es x et y du 1er point
 				String[] CoordonneesPoint1 = GeneralParts[1].split(";");
@@ -114,9 +114,9 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 				getLogger().info("\nPoint 1 :");
 				getLogger().info("Coordonnee X : string(" + CoordonneesPoint1[0] + ") / double(" + this.p1x + ")");
 				getLogger().info("Coordonnee Y : string(" + CoordonneesPoint1[1] + ") / double(" + this.p1y + ")");
-				System.out.println("Point 1 :");
-				System.out.println("Coordonnee X : string(" + CoordonneesPoint1[0] + ") / double(" + this.p1x + ")");
-				System.out.println("Coordonnee Y : string(" + CoordonneesPoint1[1] + ") / double(" + this.p1y + ")");
+				//System.out.println("Point 1 :");
+				//System.out.println("Coordonnee X : string(" + CoordonneesPoint1[0] + ") / double(" + this.p1x + ")");
+				//System.out.println("Coordonnee Y : string(" + CoordonneesPoint1[1] + ") / double(" + this.p1y + ")");
 
 				// On parse les coordonn�es x et y du 2eme point
 				String[] CoordonneesPoint2 = GeneralParts[2].split(";");
@@ -127,9 +127,9 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 				getLogger().info("\nPoint 2 :");
 				getLogger().info("Coordonnee X : string(" + CoordonneesPoint2[0] + ") / double(" + this.p2x + ")");
 				getLogger().info("Coordonnee Y : string(" + CoordonneesPoint2[1] + ") / double(" + this.p2y + ")");
-				System.out.println("Point 2 :");
-				System.out.println("Coordonnee X : string(" + CoordonneesPoint2[0] + ") / double(" + this.p2x + ")");
-				System.out.println("Coordonnee Y : string(" + CoordonneesPoint2[1] + ") / double(" + this.p2y + ")");
+				//System.out.println("Point 2 :");
+				//System.out.println("Coordonnee X : string(" + CoordonneesPoint2[0] + ") / double(" + this.p2x + ")");
+				//System.out.println("Coordonnee Y : string(" + CoordonneesPoint2[1] + ") / double(" + this.p2y + ")");
 
 
 				// Dans le cas ou le deuxieme point du dernier mouvement est le meme que le premier nouveau point ...
@@ -138,26 +138,26 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 				// Traitement des Z
 				// Modif GBI
 
-				if((this.p1x == MonScriptKuka.p2xOld && this.p1y == MonScriptKuka.p2yOld) && MonScriptKuka.p2xOld != 0.0){
+				if(this.p1x == this.pPosx && this.p1y == this.pPosy){
 					System.out.println("Go Paper");
-					p1z = 0.0;
-					p2z = 0.0;
+					p1z = ONPAPER;
+					p2z = ONPAPER;
 				}else{
 					System.out.println("Out Paper");
-					MonScriptKuka.OutPaper = true;
+					//MonScriptKuka.OutPaper = true;
 					
-					TraitementCoordonnees(pPosx,pPosy,pPosz,pPosx,pPosy,50);
-					System.out.println("TraitCoord 1");
-					this.pPosz = 50.0;
+					TraitementCoordonnees(pPosx,pPosy,pPosz,pPosx,pPosy,OFFPAPER);
+					//System.out.println("TraitCoord 1");
+					this.pPosz = OFFPAPER;
 					
-					TraitementCoordonnees(pPosx,pPosy,pPosz,p1x,p1y,50);
-					System.out.println("TraitCoord 2");
+					TraitementCoordonnees(pPosx,pPosy,pPosz,p1x,p1y,OFFPAPER);
+					//System.out.println("TraitCoord 2");
 					this.pPosx = this.p1x;
 					this.pPosy = this.p1y;
 					this.pPosz = this.p1z;
 					
-					TraitementCoordonnees(pPosx,pPosy,50,p2x,p2y,0);
-					System.out.println("TraitCoord 3");
+					TraitementCoordonnees(pPosx,pPosy,OFFPAPER,p2x,p2y,ONPAPER);
+					//System.out.println("TraitCoord 3");
 				}
 				
 				TraitementCoordonnees(p1x,p1y,p1z,p2x,p2y,p2z);
@@ -186,15 +186,6 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 
 			// Recuperation de la trame sur le serveur
 			this.Trame = MyServer.getTrame();
-
-			// Temporisation de 1s
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 			// Si les deux trames sont differentes on effectue le traitement
 			if(this.Trame != null){
 				System.out.println("Trame != null\nTrame : " + this.Trame + "\nAncienne Trame : " + AncienneTrame);
@@ -208,6 +199,7 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 				}
 			}
 		}
+		MonScriptKuka.GetMechanicalZero();
 	}
 
 	@Override
