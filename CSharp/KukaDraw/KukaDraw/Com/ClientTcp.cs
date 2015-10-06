@@ -6,7 +6,7 @@ using System.Text;
 
 namespace KukaDraw.Com
 {
-    class ClientTcp
+    public class ClientTcp
     {
         // Client socket
         private Socket client;

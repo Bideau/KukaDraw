@@ -10,11 +10,7 @@ using System.Windows.Forms;
 using Svg;
 using System.IO;
 using KukaDraw.Brain;
-
-/*
- * @author : Aubert Christophe
- * @date : 29/09/2015
- */
+using KukaDraw.Com;
 
 namespace KukaDraw.IHM
 {
@@ -22,13 +18,21 @@ namespace KukaDraw.IHM
     {
         private string pathFile;
         private SvgDocument svgFile;
-        SVGParser parser = new SVGParser();
+        private SVGParser parser;
+        private Interpretor interpretor;
+        private ClientTcp myClient;
+        private Orders myOrder;
+
        
         
-        public OpenSVGForm()
+        public OpenSVGForm(ClientTcp client)
         {
             InitializeComponent();
             this.svgFile = new SvgDocument();
+            this.parser = new SVGParser();
+            this.interpretor = new Interpretor();
+            this.myClient = client;
+            this.myOrder = new Orders();
         }
 
         private void bOpen_Click(object sender, EventArgs e)
@@ -67,6 +71,12 @@ namespace KukaDraw.IHM
         private void bDraw_Click(object sender, EventArgs e)
         {
             this.parser.Parse();
+            this.interpretor.interpretation(this.parser.GetDataList());
+            // envoyer le tableau à a order.
+            this.myOrder.addOrder(this.interpretor.getTabPointF());
+            // envoyer les ordres au kuka
+            this.myOrder.giveOrders(this.myClient);
+
         }
     }
 }

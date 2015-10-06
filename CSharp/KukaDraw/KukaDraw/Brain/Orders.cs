@@ -14,6 +14,22 @@ namespace KukaDraw.Brain
         private ArrayList orders = new ArrayList();
         private ClientTcp myClient;
 
+        public void giveOrders(ClientTcp remoteClient)
+        {
+            this.myClient = remoteClient;
+
+            // Send all orders
+            this.myClient.Send("START");
+            foreach (string order in orders)
+            {
+                this.myClient.Send(order);
+                Console.WriteLine(order);
+            }
+            this.myClient.Send("STOP");
+
+
+        }
+
         // Send all orders to the server
         public void giveOrders(int iPort, string sAddress)
         {

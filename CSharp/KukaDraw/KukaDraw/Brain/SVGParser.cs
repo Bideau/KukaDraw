@@ -93,10 +93,10 @@ namespace KukaDraw.Brain
 
            this.dataList = tmp.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
-            for (int i = 0; i < this.dataList.Length - 1; i++)
-            {
-                Console.WriteLine(this.dataList[i]);
-            }
+           //for (int i = 0; i < this.dataList.Length - 1; i++)
+           //{
+           //    Console.WriteLine(this.dataList[i]);
+           //}
         }
     }
 }

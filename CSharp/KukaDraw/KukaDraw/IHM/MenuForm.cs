@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using KukaDraw.Com;
-
 
 namespace KukaDraw.IHM
 {
@@ -19,7 +19,7 @@ namespace KukaDraw.IHM
         public MenuForm()
         {
             InitializeComponent();
-            client = new ClientTcp();
+            this.client = new ClientTcp();
         }
 
         private void bConnect_Click(object sender, EventArgs e)
@@ -28,10 +28,14 @@ namespace KukaDraw.IHM
             {
                 this.client.InitConfig(int.Parse(tbPort.Text), tbAddress.Text);
                 this.client.Connect();
-                this.connected = true;
-                this.bConnect.Text = "Deconnexion";
-                this.lStatus.Text = "Connecter à " + this.client.getConnectTo();
-                
+                Thread.Sleep(42);
+                this.connected = this.client.getStatus();
+                if (connected == true)
+                {
+                    this.bConnect.Text = "Deconnexion";
+                    this.lStatus.Text = "Connecter à " + this.client.getConnectTo();
+                    this.gbMenu.Visible = true;
+                }              
             }
             else
             {
@@ -39,20 +43,29 @@ namespace KukaDraw.IHM
                 this.connected = false;
                 this.bConnect.Text = "Connexion";
                 this.lStatus.Text = "Déconnecter ";
+                this.gbMenu.Visible = false;
             }
-
         }
 
         private void bDrawSVG_Click(object sender, EventArgs e)
         {
-            OpenSVGForm openSVG = new OpenSVGForm();
+            OpenSVGForm openSVG = new OpenSVGForm(this.client);
             openSVG.Show();
         }
 
         private void bDraw_Click(object sender, EventArgs e)
         {
-            Painter painter = new Painter();
+            Painter painter = new Painter(this.client);
             painter.Show();
+        }
+        public ClientTcp getClient()
+        {
+            return this.client;
+        }
+
+        private void bConvert_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

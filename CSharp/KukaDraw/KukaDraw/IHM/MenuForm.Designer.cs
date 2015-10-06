@@ -34,7 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gbMenu = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
             this.bDrawRealTime = new System.Windows.Forms.Button();
             this.bDraw = new System.Windows.Forms.Button();
@@ -42,7 +42,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lStatus = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gbMenu.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,18 +103,19 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Adresse IP :";
             // 
-            // groupBox2
+            // gbMenu
             // 
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.bDrawRealTime);
-            this.groupBox2.Controls.Add(this.bDraw);
-            this.groupBox2.Controls.Add(this.bDrawSVG);
-            this.groupBox2.Location = new System.Drawing.Point(13, 124);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(494, 184);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Menu";
+            this.gbMenu.Controls.Add(this.button4);
+            this.gbMenu.Controls.Add(this.bDrawRealTime);
+            this.gbMenu.Controls.Add(this.bDraw);
+            this.gbMenu.Controls.Add(this.bDrawSVG);
+            this.gbMenu.Location = new System.Drawing.Point(13, 124);
+            this.gbMenu.Name = "gbMenu";
+            this.gbMenu.Size = new System.Drawing.Size(494, 189);
+            this.gbMenu.TabIndex = 1;
+            this.gbMenu.TabStop = false;
+            this.gbMenu.Text = "Menu";
+            this.gbMenu.Visible = false;
             // 
             // button4
             // 
@@ -177,16 +178,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 320);
+            this.ClientSize = new System.Drawing.Size(514, 326);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.gbMenu);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MenuForm";
             this.Text = "Menu";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.gbMenu.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
@@ -201,7 +202,7 @@
         private System.Windows.Forms.TextBox tbAddress;
         private System.Windows.Forms.Button bConnect;
         private System.Windows.Forms.TextBox tbPort;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gbMenu;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button bDrawRealTime;
         private System.Windows.Forms.Button bDraw;
