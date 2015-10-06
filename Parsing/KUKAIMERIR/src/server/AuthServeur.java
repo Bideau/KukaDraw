@@ -10,7 +10,7 @@ public class AuthServeur extends AbstractServeur
 	
     public AuthServeur() {
 //    	super();
-    	super(30006);
+    	super(30001);
     	getLogger().info("Constructeur Serveur");
     }
     ///////////////////////////////////////////////

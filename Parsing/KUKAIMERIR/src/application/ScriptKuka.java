@@ -9,6 +9,7 @@ import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
+import com.kuka.roboticsAPI.motionModel.BasicMotions;
 import com.kuka.roboticsAPI.motionModel.RelativeLIN;
 import com.kuka.roboticsAPI.motionModel.Spline;
 
@@ -30,12 +31,12 @@ public class ScriptKuka extends RoboticsAPIApplication {
 
 	private ObjectFrame paperBase;
 
-	private ObjectFrame nearPaper0;
-	private ObjectFrame paperApproach;
+	//private ObjectFrame nearPaper0;
+	public ObjectFrame paperApproach;
 
-	private BezierCurve curve;
-	private Vector2[] trajectory;
-	private Frame[] frames;
+	//private BezierCurve curve;
+	//private Vector2[] trajectory;
+	//private Frame[] frames;
 
 	public void GetLine(double _p1x, double _p1y, double _p2x, double _p2y, double _p1z, double _p2z){
 
@@ -69,18 +70,19 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		lbr_iiwa_14_R820_1 = (LBR) getDevice(kuka_Sunrise_Cabinet_1,"LBR_iiwa_14_R820_1");
 		//  On crï¿½e l'outil stylo, on l'attache au flange et on rï¿½cupï¿½re le point en bout de stylo "penToolTCP"
 		penTool = getApplicationData().createFromTemplate("penTool");
-		//System.out.println("1");
 		penTool.attachTo(lbr_iiwa_14_R820_1.getFlange() );
-		//System.out.println("2");
 		penToolTCP = penTool.getFrame("/penToolTCP");
-		//System.out.println("3");
 		// On charge les points de l'application
 		paperBase = getApplicationData().getFrame("/Paper");
-		//System.out.println("4");
+		
+		//getApplicationData().createFromTemplate(null);
 
-		nearPaper0 = getApplicationData().getFrame("/Paper/NearPaper0");
+		//nearPaper0 = getApplicationData().getFrame("/Paper/NearPaper0");
 		paperApproach = getApplicationData().getFrame("/Paper/PaperApproach");
-
+		
+		
+		//f = new Frame (x,y,z,a,b,c);
+		
 		//System.out.println("END GETFRAME");
 	}
 
@@ -98,7 +100,26 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		// On approche la base "Paper"
 		penToolTCP.move(ptp(paperApproach).setJointVelocityRel(velocity));
 
-		penToolTCP.move(lin(nearPaper0).setJointVelocityRel(velocity));
+		//penToolTCP.move(lin(nearPaper0).setJointVelocityRel(velocity));
+		
+		/*try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
+		}*/
+		
+		//System.out.println("New Frame");
+		/*
+		Frame f,g,n;
+		n = new Frame(paperApproach.getX(),paperApproach.getY(),paperApproach.getZ());
+		f = new Frame(50,50,0);
+		g = new Frame(50,10,0);
+		
+		penToolTCP.move((new Spline(linRel(getTranslationFromFrame(n, f),paperBase))).setJointVelocityRel(velocity));
+		penToolTCP.move((new Spline(linRel(getTranslationFromFrame(f, g),paperBase))).setJointVelocityRel(velocity));
+		*/
+		//System.out.println("New Frame End");
 	}
 
 	public void initialize() {
@@ -118,7 +139,7 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		p1.x = this.p2x;
 		p1.y = this.p2y;
 		p1.z = this.p2z;
-
+/*
 		curve = new BezierCurve(p0, p1);
 		System.out.println("BEZIER CURVE");
 		
@@ -135,6 +156,7 @@ public class ScriptKuka extends RoboticsAPIApplication {
 			System.out.println(trajectory[i].x + "  " + trajectory[i].y + "  " + trajectory[i].z);
 		}
 		System.out.println("END INITIALIZE");
+		*/
 	}
 
 	//****************************** RUN **************************//
@@ -153,7 +175,7 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		// Dans un cas ou il y a plus de 500 mouvements, il faut envoyer 500 mouvements par 500 mouvements :
 		// - Le bras ne prend pas plus de 500 mouvements par spline
 
-		RelativeLIN [] splineArray = new RelativeLIN[frames.length-1];
+		/*RelativeLIN [] splineArray = new RelativeLIN[frames.length-1];
 
 		for (int i=0; i < frames.length-1; i++){
 			System.out.println(i + " X : " + frames[i].getX());
@@ -165,16 +187,31 @@ public class ScriptKuka extends RoboticsAPIApplication {
 
 		Spline linMovement = new Spline(splineArray);
 
-		System.out.println("END SPLINE");
-
+		System.out.println("END SPLINE");*/
+		
+		
 		long start, end;
 		
 		// On lance le mouvement 
 		start = System.currentTimeMillis();
 		System.out.println("1");
 		System.out.println(velocity);
-		penToolTCP.move(linMovement.setJointVelocityRel(velocity));
-		//penToolTCP.
+		
+		
+		//*************** Modif ABE 05/10/15 **********************//
+		
+		
+		Frame now,obj;
+		now = new Frame(this.p1x,this.p1y,this.p1z);
+		obj = new Frame(this.p2x,this.p2y,this.p2z);
+		
+		penToolTCP.move((new Spline(linRel(getTranslationFromFrame(now, obj),paperBase))).setJointVelocityRel(velocity));
+		//penToolTCP.move((new Spline(linRel(getTranslationFromFrame(f, g),paperBase))).setJointVelocityRel(velocity));
+		//penToolTCP.move(BasicMotions.linRel(f,g,paperBase));
+		
+		//*********************************************//
+		
+		//penToolTCP.move(linMovement.setJointVelocityRel(velocity));
 		System.out.println("2");
 		end = System.currentTimeMillis();
 		System.out.println("3");
@@ -187,6 +224,9 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		// On sauvegarde le second point pour test avec prochaine mouvement
 		this.p2xOld = this.p2x;
 		this.p2yOld = this.p2y;
+		
+		System.out.println("END RUN : " + this.p2xOld + "  " + this.p2yOld);
+		System.out.println("------------------------------------------");
 		
 		//Thread.interrupted();
 	}

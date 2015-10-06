@@ -1,7 +1,12 @@
 package Parsing;
 
+import java.awt.print.Paper;
+
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.Frame;
+import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
+import com.kuka.roboticsAPI.motionModel.BasicMotions;
 
 import server.Server;
 import application.ScriptKuka;
@@ -38,7 +43,12 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 
 		this.MyServer = ServerParametre;
 		this.MonScriptKuka = new ScriptKuka();
+		//private ObjectFrame paperApproach = getApplicationData().getFrame("/Paper/PaperApproach");
 
+		//ObjectFrame paperApproach;
+		
+		//paperApproach = getApplicationData().getFrame("/Paper/PaperApproach");
+		
 		// Initialisation des coordonn�es des diff�rents points
 		this.p1x = 0.0;
 		this.p1y = 0.0;
@@ -46,9 +56,9 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 		this.p2x = 0.0;
 		this.p2y = 0.0;
 		this.p2z = 0.0;
-		this.pPosx = 0.0;
-		this.pPosy = 0.0;
-		this.pPosz = 0.0;
+		this.pPosx = MonScriptKuka.paperApproach.getX();
+		this.pPosy = MonScriptKuka.paperApproach.getY();
+		this.pPosz = MonScriptKuka.paperApproach.getZ();
 
 		// Initialisation de la trame de comunication
 		this.Trame = "Default";
@@ -152,7 +162,7 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 					System.out.println("Out Paper");
 					MonScriptKuka.OutPaper = true;
 					
-					//TraitementCoordonnees(pPosx,pPosy,pPosz,pPosx,pPosy,50);
+					TraitementCoordonnees(pPosx,pPosy,pPosz,pPosx,pPosy,50);
 					System.out.println("TraitCoord 1");
 					this.pPosz = 50.0;
 					
@@ -184,7 +194,7 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 
 
 	public void trameStart(){
-
+		
 		// D�claration variables
 		//int i = 0;
 		String AncienneTrame = "";
