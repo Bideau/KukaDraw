@@ -29,18 +29,17 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 
 	private Server MyServer;
 	private ScriptKuka MonScriptKuka;
-
 	
 	//************************** CONSTRUCTEUR ************************//
 	public SocketTrameParsing(){
-		
+
 	}
 
 	public SocketTrameParsing(Server ServerParametre){
 
 		this.MyServer = ServerParametre;
 		this.MonScriptKuka = new ScriptKuka();
-		
+
 		// Initialisation des coordonn�es des diff�rents points
 		this.p1x = 0.0;
 		this.p1y = 0.0;
@@ -61,8 +60,8 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 
 	}
 	//***************************************************************//
-	
-	
+
+
 	//*********************** TRAITEMENT TRAME *********************//
 	public void TraitementTrame(){
 
@@ -123,18 +122,18 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 					p2z = ONPAPER;
 				}else{
 					//System.out.println("Out Paper");
-					
+
 					TraitementCoordonnees(pPosx,pPosy,pPosz,pPosx,pPosy,OFFPAPER);
 					this.pPosz = OFFPAPER;
-					
+
 					TraitementCoordonnees(pPosx,pPosy,pPosz,p1x,p1y,OFFPAPER);
 					this.pPosx = this.p1x;
 					this.pPosy = this.p1y;
 					this.pPosz = this.p1z;
-					
+
 					TraitementCoordonnees(pPosx,pPosy,OFFPAPER,p2x,p2y,ONPAPER);
 				}
-				
+
 				TraitementCoordonnees(p1x,p1y,p1z,p2x,p2y,p2z);
 				this.pPosx = this.p2x;
 				this.pPosy = this.p2y;
@@ -155,7 +154,7 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 	}
 
 	public void trameStart(){
-		
+
 		// Declaration variables
 		String AncienneTrame = "";
 
@@ -188,6 +187,6 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
-		
+
 	}
 }
