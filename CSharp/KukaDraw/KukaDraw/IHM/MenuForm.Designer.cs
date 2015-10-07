@@ -76,7 +76,7 @@
             this.tbPort.Name = "tbPort";
             this.tbPort.Size = new System.Drawing.Size(100, 21);
             this.tbPort.TabIndex = 3;
-            this.tbPort.Text = "8080";
+            this.tbPort.Text = "30002";
             // 
             // label2
             // 
@@ -93,6 +93,7 @@
             this.tbAddress.Name = "tbAddress";
             this.tbAddress.Size = new System.Drawing.Size(157, 21);
             this.tbAddress.TabIndex = 1;
+            this.tbAddress.Text = "192.168.1.7";
             // 
             // label1
             // 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Collections;
 using KukaDraw.Com;
+using KukaDraw.Core;
 
 namespace KukaDraw.Brain
 {
@@ -19,13 +20,13 @@ namespace KukaDraw.Brain
             this.myClient = remoteClient;
 
             // Send all orders
-            this.myClient.Send("START");
+            this.myClient.Send(Constants.start);
             foreach (string order in orders)
             {
                 this.myClient.Send(order);
                 Console.WriteLine(order);
             }
-            this.myClient.Send("STOP");
+            this.myClient.Send(Constants.stop);
 
 
         }
@@ -41,12 +42,12 @@ namespace KukaDraw.Brain
             this.myClient.Connect();
 
             // Send all orders
-            this.myClient.Send("START");
+            this.myClient.Send(Constants.start);
             foreach (string order in orders)
             {
                 this.myClient.Send(order);
             }
-            this.myClient.Send("STOP");
+            this.myClient.Send(Constants.stop);
 
             // Disconnect from server
             this.myClient.Disconnect();

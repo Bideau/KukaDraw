@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using KukaDraw.Brain;
 using KukaDraw.Com;
+using KukaDraw.Core;
 
 namespace KukaDraw.IHM
 {
@@ -34,11 +35,6 @@ namespace KukaDraw.IHM
 
         private void bDraw_Click(object sender, EventArgs e)
         {
-            // envoyer le tableau à a order.
-            //this.myClient.Send(this.tabpointF.ToString());
-            
-            //this.myOrder.addOrder(this.tabpointF);
-            // envoyer les ordres au kuka
             this.myOrder.giveOrders(this.myClient);
         }
 
@@ -46,11 +42,6 @@ namespace KukaDraw.IHM
         {
             this.g.Clear(this.pPainter.BackColor);
             this.tabpointF.Clear();
-        }
-
-        private void bSave_Click(object sender, EventArgs e)
-        {
-            // sauvgarder l'image.
         }
 
         private void pPainter_MouseDown(object sender, MouseEventArgs e)
@@ -72,7 +63,7 @@ namespace KukaDraw.IHM
             if (this.paint)
             {
                 //Setting the Pen BackColor and line Width
-                this.pen = new Pen(Color.Black, 1.0f);
+                this.pen = new Pen(Color.Black, Constants.brushSize);
 
                 //Drawing the line.
                 PointF p1 = new PointF(initX ?? e.X, initY ?? e.Y);
@@ -87,8 +78,6 @@ namespace KukaDraw.IHM
                 this.initX = e.X;
                 this.initY = e.Y;
             }
-            this.initX = null;
-            this.initY = null;
         }
 
         //fonction de scalling de l'ecrant sur la feuille du kuka
@@ -99,10 +88,10 @@ namespace KukaDraw.IHM
             foreach (PointF pointF in this.tabpointF)
             {
                 //invertion du y pour coller au repere de la feuille.
-                tmptabpointF.Add(new PointF((pointF.X / 4),(((840 - pointF.Y) / 4))));
+                tmptabpointF.Add(new PointF((pointF.X / Constants.scalling) + Constants.marginX, ((Constants.canvasDwY - pointF.Y) / Constants.scalling) + Constants.marginY));
             }
             this.tabpointF = tmptabpointF;
-            showListePointF();
+            //showListePointF();
 
             
         }

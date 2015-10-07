@@ -10,39 +10,48 @@ namespace KukaDraw.Core
 {
     class Log
     {
-        public Log(List<PointF> tata)
+        private string pathFile;
+
+        public Log(string pathFile)
         {
-            foreach (PointF item in tata)
+            this.pathFile = pathFile;
+        }
+        public void writeLog(List<PointF> data)
+        {
+            streamWriter(DateTime.Now.ToLongTimeString() + Constants.stringSpace + DateTime.Now.ToLongDateString());
+            foreach (PointF pointF in data)
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    toto("x : " + item.X + " y : " + item.Y, w);
-                }
-
-                using (StreamReader r = File.OpenText("log.txt"))
-                {
-                    DumpLog(r);
-                }
+                streamWriter("x : " + pointF.X + " y : " + pointF.Y);
             }
-            
+            streamReader();
+
         }
 
-        public static void toto(string logMessage, TextWriter w)
+        private void writeMessage(string logMessage, TextWriter w)
         {
-            w.Write("\r\nLog Entry : ");
-            w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
-                DateTime.Now.ToLongDateString());
-            w.WriteLine("  :");
-            w.WriteLine("  :{0}", logMessage);
-            w.WriteLine("-------------------------------");
+            w.WriteLine(logMessage);
         }
 
-        public static void DumpLog(StreamReader r)
+        private void DumpLog(StreamReader r)
         {
             string line;
             while ((line = r.ReadLine()) != null)
             {
                 Console.WriteLine(line);
+            }
+        }
+        private void streamWriter(string streamer){
+            using (StreamWriter w = File.AppendText(this.pathFile))
+            {
+                writeMessage(streamer, w);
+            }
+
+        }
+        private void streamReader()
+        {
+            using (StreamReader r = File.OpenText(this.pathFile))
+            {
+                DumpLog(r);
             }
         }
     }

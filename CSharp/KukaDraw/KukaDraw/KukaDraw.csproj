@@ -58,6 +58,7 @@
     <Compile Include="Brain\Orders.cs" />
     <Compile Include="Brain\SVGParser.cs" />
     <Compile Include="Com\ClientTcp.cs" />
+    <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Log.cs" />
     <Compile Include="IHM\MenuForm.cs">
       <SubType>Form</SubType>

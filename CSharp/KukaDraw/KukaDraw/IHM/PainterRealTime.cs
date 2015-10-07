@@ -23,7 +23,8 @@ namespace KukaDraw.IHM
         private Orders myOrder;
         private int? initX = null;
         private int? initY = null;
-        private Log toto = null;
+        //log de debug
+        private Log debug = null;
 
         public PainterRealTime(ClientTcp client)
         {
@@ -32,6 +33,8 @@ namespace KukaDraw.IHM
             this.tabpointF = new List<PointF>();
             this.myOrder = new Orders();
             this.myClient = client;
+            //debug
+            this.debug = new Log(Constants.logPainterRealTime);
         }
 
         private void bClear_Click(object sender, EventArgs e)
@@ -43,8 +46,6 @@ namespace KukaDraw.IHM
         private void pPainter_MouseDown(object sender, MouseEventArgs e)
         {
             this.paint = true;
-            this.initX = null;
-            this.initY = null;
         }
 
         private void pPainter_MouseUp(object sender, MouseEventArgs e)
@@ -55,7 +56,7 @@ namespace KukaDraw.IHM
             scaleTabPointF();
             this.myOrder.addOrder(this.tabpointF);
             this.myOrder.giveOrders(this.myClient);
-            this.toto = new Log(this.tabpointF); //debug
+            this.debug.writeLog(this.tabpointF);
             this.tabpointF.Clear();
         }
 
@@ -64,7 +65,7 @@ namespace KukaDraw.IHM
             if (this.paint)
             {
                 //Setting the Pen BackColor and line Width
-                this.pen = new Pen(Color.Black, 1.0f);
+                this.pen = new Pen(Color.Black, Constants.brushSize);
 
                 //Drawing the line.
                 PointF p1 = new PointF(initX ?? e.X, initY ?? e.Y);
@@ -89,12 +90,14 @@ namespace KukaDraw.IHM
             foreach (PointF pointF in this.tabpointF)
             {
                 //invertion du y pour coller au repere de la feuille.
-                tmptabpointF.Add(new PointF((pointF.X / 4), (((840 - pointF.Y) / 4))));
+                tmptabpointF.Add(new PointF((pointF.X / Constants.scalling) + Constants.marginX, ((Constants.canvasDwY - pointF.Y) / Constants.scalling) + Constants.marginY));
             }
             this.tabpointF = tmptabpointF;
             //showListePointF();
 
 
         }
+
+
     }
 }

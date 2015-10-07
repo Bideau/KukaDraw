@@ -12,3 +12,34 @@ C:\Users\christophe\Desktop\projet integration 3A\KukaDraw\CSharp\KukaDraw\KukaD
 C:\Users\christophe\Desktop\projet integration 3A\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.pdb
 C:\Users\christophe\Desktop\projet integration 3A\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.Painter.resources
 C:\Users\christophe\Desktop\projet integration 3A\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.PainterRealTime.resources
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\KukaDraw.exe.config
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.exe
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.pdb
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\KukaDraw.exe
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\KukaDraw.pdb
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\Svg.dll
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\Svg.pdb
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\Svg.xml
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.csprojResolveAssemblyReference.cache
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.MenuForm.resources
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.OpenSVGForm.resources
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.Painter.resources
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.PainterRealTime.resources
+C:\Users\auber\Desktop\projet\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.csproj.GenerateResource.Cache
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\KukaDraw.exe.config
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.exe
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.pdb
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\KukaDraw.exe
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\KukaDraw.pdb
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\Svg.dll
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\Svg.pdb
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\Svg.xml
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.csprojResolveAssemblyReference.cache
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.MenuForm.resources
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.OpenSVGForm.resources
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.Painter.resources
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.IHM.PainterRealTime.resources
+C:\Users\auber\Desktop\Nouveau dossier (2)\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.csproj.GenerateResource.Cache
+G:\KukaDraw\CSharp\KukaDraw\KukaDraw\bin\Debug\KukaDraw.exe.config
+G:\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.exe
+G:\KukaDraw\CSharp\KukaDraw\KukaDraw\obj\Debug\KukaDraw.pdb

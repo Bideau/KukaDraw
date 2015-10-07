@@ -31,7 +31,6 @@
             this.pPainter = new System.Windows.Forms.Panel();
             this.bDraw = new System.Windows.Forms.Button();
             this.bClear = new System.Windows.Forms.Button();
-            this.bSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // pPainter
@@ -39,7 +38,7 @@
             this.pPainter.BackColor = System.Drawing.Color.White;
             this.pPainter.Location = new System.Drawing.Point(13, 13);
             this.pPainter.Name = "pPainter";
-            this.pPainter.Size = new System.Drawing.Size(1188, 840);
+            this.pPainter.Size = new System.Drawing.Size(1040, 740);
             this.pPainter.TabIndex = 0;
             this.pPainter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseDown);
             this.pPainter.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseMove);
@@ -47,7 +46,7 @@
             // 
             // bDraw
             // 
-            this.bDraw.Location = new System.Drawing.Point(1207, 13);
+            this.bDraw.Location = new System.Drawing.Point(1059, 13);
             this.bDraw.Name = "bDraw";
             this.bDraw.Size = new System.Drawing.Size(188, 97);
             this.bDraw.TabIndex = 1;
@@ -57,7 +56,7 @@
             // 
             // bClear
             // 
-            this.bClear.Location = new System.Drawing.Point(1207, 116);
+            this.bClear.Location = new System.Drawing.Point(1059, 116);
             this.bClear.Name = "bClear";
             this.bClear.Size = new System.Drawing.Size(188, 97);
             this.bClear.TabIndex = 2;
@@ -65,21 +64,11 @@
             this.bClear.UseVisualStyleBackColor = true;
             this.bClear.Click += new System.EventHandler(this.bClear_Click);
             // 
-            // bSave
-            // 
-            this.bSave.Location = new System.Drawing.Point(1207, 219);
-            this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(188, 97);
-            this.bSave.TabIndex = 3;
-            this.bSave.Text = "Sauvgarder";
-            this.bSave.UseVisualStyleBackColor = true;
-            // 
             // Painter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1406, 865);
-            this.Controls.Add(this.bSave);
+            this.ClientSize = new System.Drawing.Size(1254, 763);
             this.Controls.Add(this.bClear);
             this.Controls.Add(this.bDraw);
             this.Controls.Add(this.pPainter);
@@ -94,7 +83,6 @@
         private System.Windows.Forms.Panel pPainter;
         private System.Windows.Forms.Button bDraw;
         private System.Windows.Forms.Button bClear;
-        private System.Windows.Forms.Button bSave;
 
     }
 }

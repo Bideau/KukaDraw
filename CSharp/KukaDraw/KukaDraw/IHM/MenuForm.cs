@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using KukaDraw.Com;
+using KukaDraw.Core;
 
 namespace KukaDraw.IHM
 {
@@ -28,11 +29,12 @@ namespace KukaDraw.IHM
             {
                 this.client.InitConfig(int.Parse(tbPort.Text), tbAddress.Text);
                 this.client.Connect();
-                Thread.Sleep(42);
+                Thread.Sleep(Constants.AnswertotheUltimateQuestionofLifeTheUniverseAndEverything);
                 this.connected = this.client.getStatus();
+                
                 if (connected == true)
                 {
-                    this.bConnect.Text = "Deconnexion";
+                    this.bConnect.Text = Constants.Disconect;
                     this.lStatus.Text = "Connecter à " + this.client.getConnectTo();
                     this.gbMenu.Visible = true;
                 }              
@@ -41,7 +43,7 @@ namespace KukaDraw.IHM
             {
                 this.client.Disconnect();
                 this.connected = false;
-                this.bConnect.Text = "Connexion";
+                this.bConnect.Text = Constants.Conect;
                 this.lStatus.Text = "Déconnecter ";
                 this.gbMenu.Visible = false;
             }
@@ -61,11 +63,6 @@ namespace KukaDraw.IHM
         public ClientTcp getClient()
         {
             return this.client;
-        }
-
-        private void bConvert_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void bDrawRealTime_Click(object sender, EventArgs e)

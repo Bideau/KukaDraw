@@ -11,6 +11,7 @@ using Svg;
 using System.IO;
 using KukaDraw.Brain;
 using KukaDraw.Com;
+using KukaDraw.Core;
 
 namespace KukaDraw.IHM
 {
@@ -21,10 +22,7 @@ namespace KukaDraw.IHM
         private SVGParser parser;
         private Interpretor interpretor;
         private ClientTcp myClient;
-        //private Orders myOrder;
-
-       
-        
+  
         public OpenSVGForm(ClientTcp client)
         {
             InitializeComponent();
@@ -32,16 +30,15 @@ namespace KukaDraw.IHM
             this.parser = new SVGParser();
             this.interpretor = new Interpretor();
             this.myClient = client;
-            //this.myOrder = new Orders();
         }
 
         private void bOpen_Click(object sender, EventArgs e)
         {
             Stream myStream = null;
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.InitialDirectory = "c:\\";
-            fileDialog.DefaultExt = ".svg";
-            fileDialog.Filter = "SVG document (.svg) |* .svg";
+            fileDialog.InitialDirectory = Constants.initialDirectory;
+            fileDialog.DefaultExt = Constants.defaultExt;
+            fileDialog.Filter = Constants.filter;
             fileDialog.RestoreDirectory = true;
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
@@ -65,20 +62,13 @@ namespace KukaDraw.IHM
                         MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
-
         }
 
         private void bDraw_Click(object sender, EventArgs e)
         {
             this.parser.Parse();
             this.interpretor.interpretation(this.parser.GetDataList());
-            // envoyer le tableau à a order.
-            //this.myOrder.addOrder(this.interpretor.getTabPointF());
-            // envoyer les ordres au kuka
-            //this.myOrder.giveOrders(this.myClient);
-
             this.interpretor.myOrders.giveOrders(this.myClient);
-
             this.interpretor.myOrders.numberOFOrders();
         }
     }
