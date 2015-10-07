@@ -2,13 +2,16 @@ package server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintStream;
 
 public class Server {
 
 	private BufferedReader in=null;
+	private PrintStream out=null;
 	private boolean disco=true;
-	public Server(BufferedReader reader) {
+	public Server(BufferedReader reader, PrintStream writer) {
 		this.in=reader;
+		this.out=writer;
 		disco=true;
 	}
 
@@ -31,6 +34,10 @@ public class Server {
 			disco=true;
 		}
 		return tmp;
+	}
+	
+	public void log(String message){
+		out.println(message);
 	}
 
 	public boolean isConnected (){

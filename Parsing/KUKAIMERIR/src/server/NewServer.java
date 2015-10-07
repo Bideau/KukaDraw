@@ -20,8 +20,6 @@ public class NewServer extends RoboticsAPIApplication {
 	BufferedReader in=null;
 	
 	public NewServer() {
-		//getLogger().info("Constructeur Serveur Abstract");
-		//System.out.println("Constructeur Serveur");
 		this.port=30002;
 		this.client=null;
 		this.srv=null;
@@ -29,33 +27,23 @@ public class NewServer extends RoboticsAPIApplication {
 	}
 	
 	public void startProtocol() throws Exception{
-		//getLogger().info("toto");
-		//System.out.println("tot");
-		/*while(true){
-			System.out.println(in.readLine());
-		}*/
-		Server tmp = new Server (in);
+		Server tmp = new Server (in,out);
 		SocketTrameParsing myParse=new SocketTrameParsing(tmp);
 		myParse.trameStart();
 	}
 
 	@Override
 	public void run() {
-		//getLogger().info("Run Serveur");
-		//System.out.println("Run Serveur");
+
 		try{
 			getLogger().info("Serveur TCP sur le port "+port+"...");
-			//System.out.println("Serveur TCP sur le port "+port+"...");
-			//while(true){
+
 				srv =new ServerSocket(port);
 				client=srv.accept();
 				startThreadServer(client);
-				//getLogger().info("Connexion entrante sur le port " + port);
 				System.out.println("Connexion entrante sur le port " + port);
-			//}
 		}catch(Exception e){
 			getLogger().error("Arret du serveur.");
-			//System.err.println("Arret du serveur.");
 			System.err.println(e);
 		}finally{
 			this.close();
@@ -91,7 +79,6 @@ public class NewServer extends RoboticsAPIApplication {
 	public void close(){
 		try{
 			getLogger().info("Fermeture de la connexion...");
-			//System.out.println("Fermeture de la connexion...");
 			if (srv!=null){
 				srv.close();
 				srv=null;
@@ -107,9 +94,5 @@ public class NewServer extends RoboticsAPIApplication {
 			System.err.println(e);
 		}
 	}
-	/*
-	public static void main (String[] args){
-		new NewServer(1234);
-	}*/
 
 }
