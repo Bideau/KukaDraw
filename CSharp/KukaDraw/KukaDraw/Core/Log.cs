@@ -26,7 +26,23 @@ namespace KukaDraw.Core
             streamReader();
 
         }
+        public void writeLog(List<string> data)
+        {
+            streamWriter(DateTime.Now.ToLongTimeString() + Constants.stringSpace + DateTime.Now.ToLongDateString());
+            foreach (string word in data)
+            {
+                streamWriter(word);
+            }
+            streamReader();
 
+        }
+
+        public void writeLog(string data)
+        {
+            streamWriter(data);
+            streamReader();
+
+        }
         private void writeMessage(string logMessage, TextWriter w)
         {
             w.WriteLine(logMessage);

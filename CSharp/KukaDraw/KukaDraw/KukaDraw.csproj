@@ -39,7 +39,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Ressources\" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Svg">
       <HintPath>..\packages\Svg.2.1.0\lib\Svg.dll</HintPath>
@@ -55,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Brain\Bezier.cs" />
     <Compile Include="Brain\Interpretor.cs" />
+    <Compile Include="Brain\Optimize.cs" />
     <Compile Include="Brain\Orders.cs" />
     <Compile Include="Brain\SVGParser.cs" />
     <Compile Include="Com\ClientTcp.cs" />

@@ -62,9 +62,11 @@ namespace KukaDraw.Core
         //Painter
         //
         public const float brushSize = 1.0f;
+        public const float minSizeLine = 0.8f;
 
         /* ***** LOG ****** */
         public const string logPainterRealTime = "LogPainterRealTime.txt";
         public const string logPainter = "LogPainter.txt";
+        public const string logOrder = "LogOrder.txt";
     }
 }

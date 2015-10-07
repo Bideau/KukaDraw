@@ -23,6 +23,7 @@ namespace KukaDraw.IHM
         private Orders myOrder;
         private int? initX = null;
         private int? initY = null;
+        private Optimize optimize = null;
         //log de debug
         private Log debug = null;
 
@@ -33,6 +34,7 @@ namespace KukaDraw.IHM
             this.tabpointF = new List<PointF>();
             this.myOrder = new Orders();
             this.myClient = client;
+            this.optimize = new Optimize();
             //debug
             this.debug = new Log(Constants.logPainterRealTime);
         }
@@ -53,11 +55,13 @@ namespace KukaDraw.IHM
             this.paint = false;
             this.initX = null;
             this.initY = null;
+            this.tabpointF = this.optimize.drawingOptimize(this.tabpointF);
             scaleTabPointF();
             this.myOrder.addOrder(this.tabpointF);
             this.myOrder.giveOrders(this.myClient);
             this.debug.writeLog(this.tabpointF);
             this.tabpointF.Clear();
+            showListePointF();
         }
 
         private void pPainter_MouseMove(object sender, MouseEventArgs e)
@@ -97,7 +101,12 @@ namespace KukaDraw.IHM
 
 
         }
-
-
+        public void showListePointF()
+        {
+            foreach (PointF pointF in this.tabpointF)
+            {
+                Console.WriteLine("x : {0} y : {1}", pointF.X, pointF.Y);
+            }
+        }
     }
 }

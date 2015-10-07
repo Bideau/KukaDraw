@@ -14,6 +14,8 @@ namespace KukaDraw.Brain
     {
         private ArrayList orders = new ArrayList();
         private ClientTcp myClient;
+        //debug
+        //private Log debug = new Log(Constants.logOrder);
 
         public void giveOrders(ClientTcp remoteClient)
         {
@@ -24,8 +26,10 @@ namespace KukaDraw.Brain
             foreach (string order in orders)
             {
                 this.myClient.Send(order);
+                //debug.writeLog(order);
                 Console.WriteLine(order);
             }
+
             this.myClient.Send(Constants.stop);
 
 
@@ -46,6 +50,7 @@ namespace KukaDraw.Brain
             foreach (string order in orders)
             {
                 this.myClient.Send(order);
+                //debug.writeLog(order);
             }
             this.myClient.Send(Constants.stop);
 
