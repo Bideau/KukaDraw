@@ -48,7 +48,6 @@ namespace KukaDraw.Brain
                         this.data[index].Equals("c") || this.data[index].Equals("C") || this.data[index].Equals("l") ||
                         this.data[index].Equals("L") || this.data[index].Equals("y") || this.data[index].Equals("Y"))
                 {
-
                 }
                 else
                 {

@@ -39,9 +39,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Ressources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Svg">
       <HintPath>..\packages\Svg.2.1.0\lib\Svg.dll</HintPath>
@@ -102,6 +100,12 @@
     <EmbeddedResource Include="IHM\PainterRealTime.resx">
       <DependentUpon>PainterRealTime.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ressources\Attention.svg" />
+    <Content Include="Ressources\line.svg" />
+    <Content Include="Ressources\pirate.svg" />
+    <Content Include="Ressources\testpath.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
