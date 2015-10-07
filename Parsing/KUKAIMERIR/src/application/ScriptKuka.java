@@ -18,9 +18,6 @@ public class ScriptKuka extends RoboticsAPIApplication {
 	//public double p2xOld,p2yOld,p2zOld;
 	// Rapidite : 0.2 --> 20%
 	double velocity = 1;
-	
-	//public boolean OutPaper = false;
-	//public boolean OnPaper = false;
 
 	private Controller kuka_Sunrise_Cabinet_1;
 	private LBR lbr_iiwa_14_R820_1;
@@ -56,9 +53,9 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		this.p2y = 0.0;
 		this.p1z = 0.0;
 		this.p2z = 0.0;
-		//this.p2xOld = 0.0;
-		//this.p2yOld = 0.0;
-		//this.p2zOld = 0.0;
+		
+		// Init Pencil
+		InitialisationCom();
 
 		paperBase = getApplicationData().getFrame("/Paper");
 		
@@ -74,21 +71,13 @@ public class ScriptKuka extends RoboticsAPIApplication {
 				);
 	}
 
-	public void ApprochePaper(boolean Init){
-		
-		if(Init){
-			// Initialisation du pencil pour ecrire avec le Kuka
-			InitialisationCom();
-		}
+	public void ApprochePaper(){
 		
 		// On approche la base "Paper"
 		penToolTCP.move(ptp(paperApproach).setJointVelocityRel(velocity));
 
 	}
-/*
-	public void initialize() {
-		
-	}*/
+
 	
 	public void InitialisationCom(){
 		kuka_Sunrise_Cabinet_1 = getController("KUKA_Sunrise_Cabinet_1");
@@ -123,6 +112,6 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		//this.p2xOld = this.p2x;
 		//this.p2yOld = this.p2y;
 		
-		System.out.println("------------------------------------------");
+		//System.out.println("------------------------------------------");
 	}
 }
