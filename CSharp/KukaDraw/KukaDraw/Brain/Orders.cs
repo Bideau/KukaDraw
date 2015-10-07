@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Collections;
 using KukaDraw.Com;
+using KukaDraw.Core;
 
 namespace KukaDraw.Brain
 {
@@ -13,6 +14,22 @@ namespace KukaDraw.Brain
     {
         private ArrayList orders = new ArrayList();
         private ClientTcp myClient;
+
+        public void giveOrders(ClientTcp remoteClient)
+        {
+            this.myClient = remoteClient;
+
+            // Send all orders
+            this.myClient.Send(Constants.start);
+            foreach (string order in orders)
+            {
+                this.myClient.Send(order);
+                Console.WriteLine(order);
+            }
+            this.myClient.Send(Constants.stop);
+
+
+        }
 
         // Send all orders to the server
         public void giveOrders(int iPort, string sAddress)
@@ -25,12 +42,12 @@ namespace KukaDraw.Brain
             this.myClient.Connect();
 
             // Send all orders
-            this.myClient.Send("START");
+            this.myClient.Send(Constants.start);
             foreach (string order in orders)
             {
                 this.myClient.Send(order);
             }
-            this.myClient.Send("STOP");
+            this.myClient.Send(Constants.stop);
 
             // Disconnect from server
             this.myClient.Disconnect();
@@ -77,5 +94,17 @@ namespace KukaDraw.Brain
                 index++;
             }
         }
+
+        // Print how many orders we have
+        public void numberOFOrders()
+        {
+            int index = 0;
+            foreach (string stg in orders)
+            {
+                index++;
+            }
+            Console.WriteLine("There are {0} orders.", index);
+        }
+
     }
 }

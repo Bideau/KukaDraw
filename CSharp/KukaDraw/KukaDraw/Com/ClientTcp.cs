@@ -6,7 +6,7 @@ using System.Text;
 
 namespace KukaDraw.Com
 {
-    class ClientTcp
+    public class ClientTcp
     {
         // Client socket
         private Socket client;
@@ -146,7 +146,14 @@ namespace KukaDraw.Com
         //Get Status
         public bool getStatus()
         {
-            return this.client.Connected;
+            if (this.client != null)
+            {
+                return this.client.Connected;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         //Get connected to

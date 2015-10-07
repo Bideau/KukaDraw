@@ -13,7 +13,7 @@ using KukaDraw.Core;
 
 namespace KukaDraw.IHM
 {
-    public partial class Painter : Form
+    public partial class PainterRealTime : Form
     {
         private bool paint = false;
         private Graphics g;
@@ -23,19 +23,18 @@ namespace KukaDraw.IHM
         private Orders myOrder;
         private int? initX = null;
         private int? initY = null;
+        //log de debug
+        private Log debug = null;
 
-        public Painter(ClientTcp client)
+        public PainterRealTime(ClientTcp client)
         {
             InitializeComponent();
             this.g = this.pPainter.CreateGraphics();
             this.tabpointF = new List<PointF>();
             this.myOrder = new Orders();
             this.myClient = client;
-        }
-
-        private void bDraw_Click(object sender, EventArgs e)
-        {
-            this.myOrder.giveOrders(this.myClient);
+            //debug
+            this.debug = new Log(Constants.logPainterRealTime);
         }
 
         private void bClear_Click(object sender, EventArgs e)
@@ -56,6 +55,9 @@ namespace KukaDraw.IHM
             this.initY = null;
             scaleTabPointF();
             this.myOrder.addOrder(this.tabpointF);
+            this.myOrder.giveOrders(this.myClient);
+            this.debug.writeLog(this.tabpointF);
+            this.tabpointF.Clear();
         }
 
         private void pPainter_MouseMove(object sender, MouseEventArgs e)
@@ -93,16 +95,9 @@ namespace KukaDraw.IHM
             this.tabpointF = tmptabpointF;
             //showListePointF();
 
-            
+
         }
 
-        //Fonction de debug qui affiche les valeur du tabpointF
-        public void showListePointF()
-        {
-            foreach (PointF pointF in this.tabpointF)
-            {
-                Console.WriteLine("x : {0} y : {1}", pointF.X, pointF.Y);
-            }
-        }
+
     }
 }

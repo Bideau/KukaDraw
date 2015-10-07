@@ -8,6 +8,7 @@ using System.Collections;
 using System.Xml;
 using System.Xml.Linq;
 using System.IO;
+using KukaDraw.Core;
 
 namespace KukaDraw.Brain
 {
@@ -15,7 +16,7 @@ namespace KukaDraw.Brain
     {
         private string[] dataList;
         private string data;
-        string isEmpty = "";
+        string isEmpty = Constants.stringIsEmpty;
 
         public SVGParser()
         {
@@ -43,16 +44,16 @@ namespace KukaDraw.Brain
             doc.XmlResolver = null;
             doc.Load(reader);
 
-            foreach (XmlElement node in doc.GetElementsByTagName("path"))
+            foreach (XmlElement node in doc.GetElementsByTagName(Constants.path))
             {
                 //Console.WriteLine(node.GetAttribute("d") + " titi " + "\n");
-                this.data = this.data + " " + node.GetAttribute("d");
+                this.data = this.data + Constants.stringSpace + node.GetAttribute(Constants.pathValue);
             }
             //suppression de tout les z dans les data
             this.data = this.data.Replace("z", isEmpty);
             this.data = this.data.Replace("Z", isEmpty);
-            this.data = this.data.Replace("\n", " ");
-            this.data = this.data.Replace(",", " ");
+            this.data = this.data.Replace("\n", Constants.stringSpace);
+            this.data = this.data.Replace(",", Constants.stringSpace);
             
             //Console.WriteLine(this.data);
 
@@ -61,13 +62,13 @@ namespace KukaDraw.Brain
         {
             string tmpChain = null;
 
-            tmpChain = chain[0] + " ";
+            tmpChain = chain[0] + Constants.stringSpace;
 
             for (int i = 1; i < chain.Length; i++)
             {
                 if (chain[i].Equals('m') || chain[i].Equals('M') || chain[i].Equals('c') || chain[i].Equals('C') || chain[i].Equals('l') || chain[i].Equals('L'))
                 {
-                    tmpChain = tmpChain + chain[i] + " ";
+                    tmpChain = tmpChain + chain[i] + Constants.stringSpace;
                 }
                 else
                 {
@@ -79,7 +80,7 @@ namespace KukaDraw.Brain
 
         public void Parse()
         {
-            string[] separator = {" "};
+            string[] separator = { Constants.stringSpace };
             string[] separators = { "m", "M" };
             string[] spliters = this.data.Split(separators, StringSplitOptions.RemoveEmptyEntries);
             string moveTo = null;
@@ -90,13 +91,7 @@ namespace KukaDraw.Brain
                 moveTo = "m" + spliters[i];           
                 tmp = tmp + addSeparator(moveTo);
             }
-
            this.dataList = tmp.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < this.dataList.Length - 1; i++)
-            {
-                Console.WriteLine(this.dataList[i]);
-            }
         }
     }
 }

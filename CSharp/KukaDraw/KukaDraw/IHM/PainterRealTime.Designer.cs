@@ -1,6 +1,6 @@
 ﻿namespace KukaDraw.IHM
 {
-    partial class Painter
+    partial class PainterRealTime
     {
         /// <summary>
         /// Required designer variable.
@@ -28,61 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pPainter = new System.Windows.Forms.Panel();
-            this.bDraw = new System.Windows.Forms.Button();
             this.bClear = new System.Windows.Forms.Button();
+            this.pPainter = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // pPainter
-            // 
-            this.pPainter.BackColor = System.Drawing.Color.White;
-            this.pPainter.Location = new System.Drawing.Point(13, 13);
-            this.pPainter.Name = "pPainter";
-            this.pPainter.Size = new System.Drawing.Size(1040, 740);
-            this.pPainter.TabIndex = 0;
-            this.pPainter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseDown);
-            this.pPainter.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseMove);
-            this.pPainter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseUp);
-            // 
-            // bDraw
-            // 
-            this.bDraw.Location = new System.Drawing.Point(1059, 13);
-            this.bDraw.Name = "bDraw";
-            this.bDraw.Size = new System.Drawing.Size(188, 97);
-            this.bDraw.TabIndex = 1;
-            this.bDraw.Text = "Dessiner";
-            this.bDraw.UseVisualStyleBackColor = true;
-            this.bDraw.Click += new System.EventHandler(this.bDraw_Click);
             // 
             // bClear
             // 
-            this.bClear.Location = new System.Drawing.Point(1059, 116);
+            this.bClear.Location = new System.Drawing.Point(1058, 12);
             this.bClear.Name = "bClear";
             this.bClear.Size = new System.Drawing.Size(188, 97);
-            this.bClear.TabIndex = 2;
+            this.bClear.TabIndex = 6;
             this.bClear.Text = "Effacer";
             this.bClear.UseVisualStyleBackColor = true;
             this.bClear.Click += new System.EventHandler(this.bClear_Click);
             // 
-            // Painter
+            // pPainter
+            // 
+            this.pPainter.BackColor = System.Drawing.Color.White;
+            this.pPainter.Location = new System.Drawing.Point(12, 12);
+            this.pPainter.Name = "pPainter";
+            this.pPainter.Size = new System.Drawing.Size(1040, 740);
+            this.pPainter.TabIndex = 4;
+            this.pPainter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseDown);
+            this.pPainter.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseMove);
+            this.pPainter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pPainter_MouseUp);
+            // 
+            // PainterRealTime
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1254, 763);
+            this.ClientSize = new System.Drawing.Size(1252, 760);
             this.Controls.Add(this.bClear);
-            this.Controls.Add(this.bDraw);
             this.Controls.Add(this.pPainter);
-            this.Name = "Painter";
-            this.Text = "Painter";
+            this.Name = "PainterRealTime";
+            this.Text = "PainterRealTime";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pPainter;
-        private System.Windows.Forms.Button bDraw;
         private System.Windows.Forms.Button bClear;
-
+        private System.Windows.Forms.Panel pPainter;
     }
 }

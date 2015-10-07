@@ -39,9 +39,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Svg">
       <HintPath>..\packages\Svg.2.1.0\lib\Svg.dll</HintPath>
@@ -57,9 +55,11 @@
   <ItemGroup>
     <Compile Include="Brain\Bezier.cs" />
     <Compile Include="Brain\Interpretor.cs" />
-    <Compile Include="Brain\Order.cs" />
+    <Compile Include="Brain\Orders.cs" />
     <Compile Include="Brain\SVGParser.cs" />
     <Compile Include="Com\ClientTcp.cs" />
+    <Compile Include="Core\Constants.cs" />
+    <Compile Include="Core\Log.cs" />
     <Compile Include="IHM\MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +78,12 @@
     <Compile Include="IHM\Painter.Designer.cs">
       <DependentUpon>Painter.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PainterRealTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IHM\PainterRealTime.Designer.cs">
+      <DependentUpon>PainterRealTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Painter.resx">
       <DependentUpon>Painter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PainterRealTime.resx">
+      <DependentUpon>PainterRealTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,6 +11,11 @@ namespace KukaDraw.Brain
     {
         public PointF[] curveCoordinates;
 
+        public PointF[] getCurveCoordinates()
+        {
+            return this.curveCoordinates;
+        }
+
         public void GetBezierApproximationR(PointF[] controlPoints, int outputSegmentCount)
         {
             curveCoordinates = new PointF[outputSegmentCount + 1];
