@@ -94,10 +94,10 @@ public class ScriptKuka extends RoboticsAPIApplication {
 	//****************************** RUN **************************//
 	public void run() {
 		
-		long start, end;
+		//long start, end;
 		
 		// On lance le mouvement 
-		start = System.currentTimeMillis();
+		//start = System.currentTimeMillis();
 		//*************** Modif ABE 05/10/15 **********************//
 		now = new Frame(this.p1x,this.p1y,this.p1z);
 		obj = new Frame(this.p2x,this.p2y,this.p2z);
@@ -105,8 +105,8 @@ public class ScriptKuka extends RoboticsAPIApplication {
 		penToolTCP.move((new Spline(linRel(getTranslationFromFrame(now, obj),paperBase))).setJointVelocityRel(velocity));
 		
 		//*********************************************//
-		end = System.currentTimeMillis();
-		System.out.println("LIN Move time: " + (end - start));
+		//end = System.currentTimeMillis();
+		//System.out.println("LIN Move time: " + (end - start));
 
 		// On sauvegarde le second point pour test avec prochaine mouvement
 		//this.p2xOld = this.p2x;

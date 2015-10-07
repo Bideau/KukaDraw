@@ -56,7 +56,7 @@ public class SocketTrameParsing extends RoboticsAPIApplication {
 		// Initialisation de la trame de comunication
 		this.Trame = "Default";
 
-		// Initialisation du booleen permettatn de stopper la lecture dans la socket
+		// Initialisation du booleen permettant de stopper la lecture dans la socket
 		this.StopTrame = false;
 
 	}
