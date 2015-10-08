@@ -125,7 +125,7 @@ namespace KukaDraw.Brain
                     baseY = float.Parse(this.data[i + 2]);
 
                     // DEBUG
-                    Console.Write("M ");
+                    //Console.Write("M ");
                 }
 
                 // L CASE
@@ -165,7 +165,7 @@ namespace KukaDraw.Brain
                     } while (endMove == false);
 
                     // DEBUG
-                    Console.Write("L ");
+                    //Console.Write("L ");
 
                 }
 
@@ -249,7 +249,7 @@ namespace KukaDraw.Brain
                     i = i + 2;
 
                     // DEBUG
-                    Console.Write("M ");
+                    //Console.Write("M ");
                 }
                 // L CASE
                 else if (this.data[i].Equals("l") || this.data[i].Equals("L"))
@@ -292,7 +292,7 @@ namespace KukaDraw.Brain
                     PointListTmp.Clear();
 
                     // DEBUG
-                    Console.Write("L ");
+                    //Console.Write("L ");
 
                 }
                 // C CASE
@@ -351,7 +351,7 @@ namespace KukaDraw.Brain
                     myOrders.addOrder(PointListTmp2.ToArray());
 
                     // DEBUG
-                    Console.Write("C{0} ", PointListTmp.ToArray().Length);
+                    //Console.Write("C{0} ", PointListTmp.ToArray().Length);
 
                     PointListTmp.Clear();
                     PointListTmp2.Clear();

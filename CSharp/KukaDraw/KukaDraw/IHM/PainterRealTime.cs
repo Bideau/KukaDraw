@@ -25,7 +25,7 @@ namespace KukaDraw.IHM
         private int? initY = null;
         private Optimize optimize = null;
         //log de debug
-        private Log debug = null;
+        //private Log debug = null;
 
         public PainterRealTime(ClientTcp client)
         {
@@ -36,7 +36,7 @@ namespace KukaDraw.IHM
             this.myClient = client;
             this.optimize = new Optimize();
             //debug
-            this.debug = new Log(Constants.logPainterRealTime);
+            //this.debug = new Log(Constants.logPainterRealTime);
         }
 
         private void bClear_Click(object sender, EventArgs e)
@@ -59,9 +59,9 @@ namespace KukaDraw.IHM
             scaleTabPointF();
             this.myOrder.addOrder(this.tabpointF);
             this.myOrder.giveOrders(this.myClient);
-            this.debug.writeLog(this.tabpointF);
+            //this.debug.writeLog(this.tabpointF);
             this.tabpointF.Clear();
-            showListePointF();
+            //showListePointF();
         }
 
         private void pPainter_MouseMove(object sender, MouseEventArgs e)
@@ -101,12 +101,13 @@ namespace KukaDraw.IHM
 
 
         }
-        public void showListePointF()
-        {
-            foreach (PointF pointF in this.tabpointF)
-            {
-                Console.WriteLine("x : {0} y : {1}", pointF.X, pointF.Y);
-            }
-        }
+        // fonction de debug
+        //public void showListePointF()
+        //{
+        //    foreach (PointF pointF in this.tabpointF)
+        //    {
+        //        Console.WriteLine("x : {0} y : {1}", pointF.X, pointF.Y);
+        //    }
+        //}
     }
 }

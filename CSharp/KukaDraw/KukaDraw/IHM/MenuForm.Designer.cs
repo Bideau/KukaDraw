@@ -35,7 +35,6 @@
             this.tbAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.gbMenu = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
             this.bDrawRealTime = new System.Windows.Forms.Button();
             this.bDrawSVG = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -105,29 +104,19 @@
             // 
             // gbMenu
             // 
-            this.gbMenu.Controls.Add(this.button4);
             this.gbMenu.Controls.Add(this.bDrawRealTime);
             this.gbMenu.Controls.Add(this.bDrawSVG);
             this.gbMenu.Location = new System.Drawing.Point(13, 124);
             this.gbMenu.Name = "gbMenu";
-            this.gbMenu.Size = new System.Drawing.Size(494, 189);
+            this.gbMenu.Size = new System.Drawing.Size(494, 105);
             this.gbMenu.TabIndex = 1;
             this.gbMenu.TabStop = false;
             this.gbMenu.Text = "Menu";
             this.gbMenu.Visible = false;
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(261, 20);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(227, 75);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Ecrire";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
             // bDrawRealTime
             // 
-            this.bDrawRealTime.Location = new System.Drawing.Point(139, 101);
+            this.bDrawRealTime.Location = new System.Drawing.Point(261, 20);
             this.bDrawRealTime.Name = "bDrawRealTime";
             this.bDrawRealTime.Size = new System.Drawing.Size(227, 75);
             this.bDrawRealTime.TabIndex = 2;
@@ -168,7 +157,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 320);
+            this.ClientSize = new System.Drawing.Size(514, 237);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.gbMenu);
             this.Controls.Add(this.groupBox1);
@@ -193,7 +182,6 @@
         private System.Windows.Forms.Button bConnect;
         private System.Windows.Forms.TextBox tbPort;
         private System.Windows.Forms.GroupBox gbMenu;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button bDrawRealTime;
         private System.Windows.Forms.Button bDrawSVG;
         private System.Windows.Forms.GroupBox groupBox3;
