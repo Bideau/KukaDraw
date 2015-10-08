@@ -16,7 +16,7 @@ namespace KukaDraw.Brain
         public Orders myOrders;
         private float kukaXMax = Constants.canvasDsX;
         private float kukaYMax = Constants.canvasDsY;
-        private Optimize optimize;
+        //private Optimize optimize;
 
         // Constructor
         public Interpretor()
@@ -24,7 +24,7 @@ namespace KukaDraw.Brain
             this.data = null;
             this.bezier = new Bezier();
             this.myOrders = new Orders();
-            this.optimize = new Optimize();
+            //this.optimize = new Optimize();
         }
 
         // Adapt all coordinates to the kukaPlan
@@ -66,8 +66,8 @@ namespace KukaDraw.Brain
                 }
             }
 
-            scaleOnX = this.kukaXMax / imgXMax + 50;
-            scaleOnY = this.kukaYMax / imgYMax + 50;
+            scaleOnX = this.kukaXMax / imgXMax;
+            scaleOnY = this.kukaYMax / imgYMax;
             first = true;
 
 
@@ -287,7 +287,7 @@ namespace KukaDraw.Brain
                     } while (endMove == false);
 
                     i = j;
-                    PointListTmp = optimize.drawingOptimize(PointListTmp);
+                    //PointListTmp = optimize.drawingOptimize(PointListTmp);
                     myOrders.addOrder(PointListTmp);
                     PointListTmp.Clear();
 
@@ -347,7 +347,7 @@ namespace KukaDraw.Brain
                         }
 
                     }
-                    PointListTmp2 = optimize.drawingOptimize(PointListTmp2);
+                    //PointListTmp2 = optimize.drawingOptimize(PointListTmp2);
                     myOrders.addOrder(PointListTmp2.ToArray());
 
                     // DEBUG

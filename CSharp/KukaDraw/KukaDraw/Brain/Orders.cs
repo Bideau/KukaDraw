@@ -23,12 +23,12 @@ namespace KukaDraw.Brain
 
             // Send all orders
             this.myClient.Send(Constants.start);
-            //foreach (string order in orders)
-            //{
-            //    this.myClient.Send(order);
-            //    //debug.writeLog(order);
-            //    Console.WriteLine(order);
-            //}
+            foreach (string order in orders)
+            {
+                this.myClient.Send(order);
+                //debug.writeLog(order);
+                //Console.WriteLine(order);
+            }
 
             this.myClient.Send(Constants.stop);
 
