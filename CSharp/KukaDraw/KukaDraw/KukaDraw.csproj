@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Brain\Bezier.cs" />
     <Compile Include="Brain\Interpretor.cs" />
+    <Compile Include="Brain\Optimize.cs" />
     <Compile Include="Brain\Orders.cs" />
     <Compile Include="Brain\SVGParser.cs" />
     <Compile Include="Com\ClientTcp.cs" />
@@ -99,6 +100,12 @@
     <EmbeddedResource Include="IHM\PainterRealTime.resx">
       <DependentUpon>PainterRealTime.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ressources\Attention.svg" />
+    <Content Include="Ressources\line.svg" />
+    <Content Include="Ressources\pirate.svg" />
+    <Content Include="Ressources\testpath.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

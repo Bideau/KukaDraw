@@ -12,75 +12,71 @@ namespace KukaDraw.Brain
     class Interpretor
     {
         private string[] data;
-        private List<PointF> tabPointF;
         private Bezier bezier;
         public Orders myOrders;
-        private float kukaXMax = Constants.canvasDsX; // Size of X of the kuka's field
-        private float kukaYMax = Constants.canvasDsY; // Size of Y of the kuka's field
+        private float kukaXMax = Constants.canvasDsX;
+        private float kukaYMax = Constants.canvasDsY;
+        private Optimize optimize;
 
         // Constructor
         public Interpretor()
         {
             this.data = null;
-            this.tabPointF = new List<PointF>();
             this.bezier = new Bezier();
             this.myOrders = new Orders();
+            this.optimize = new Optimize();
         }
 
-        // Transform all 
+        // Adapt all coordinates to the kukaPlan
         public void transformCoordinates()
         {
             Boolean first = true;
 
             float imgXMax = 0;
             float imgYMax = 0;
-            float baseX;
-            float baseY;
             float myX = 0;
             float myY = 0;
             float scaleOnX;
             float scaleOnY;
-            baseX = float.Parse(data[1]);
-            baseY = float.Parse(data[2]);
 
-            // Convert to absolute coordinates
-            for (int index = 3; index < data.Length; index++)
+            this.coordinatesToAbsoluteOnes();
+
+            // Get maxX and maxY
+            for (int index = 0; index < data.Length; index++)
             {
                 if (this.data[index].Equals("m") || this.data[index].Equals("M") ||
                         this.data[index].Equals("c") || this.data[index].Equals("C") || this.data[index].Equals("l") ||
-                        this.data[index].Equals("L"))
+                        this.data[index].Equals("L") || this.data[index].Equals("y") || this.data[index].Equals("Y"))
                 {
-
                 }
                 else
                 {
                     if (first)
                     {
                         myX = float.Parse(data[index]);
-                        myX = baseX + myX;
                         if (myX > imgXMax) imgXMax = myX;
-                        data[index] = myX.ToString();
                         first = false;
                     }
                     else
                     {
                         myY = float.Parse(data[index]);
-                        myY = baseY + myY;
                         if (myY > imgYMax) imgYMax = myY;
-                        data[index] = myY.ToString();
                         first = true;
                     }
                 }
             }
 
-            scaleOnX = this.kukaXMax / imgXMax;
-            scaleOnY = this.kukaYMax / imgYMax;
+            scaleOnX = this.kukaXMax / imgXMax + 50;
+            scaleOnY = this.kukaYMax / imgYMax + 50;
             first = true;
+
+
             // Scale all coordinates to the kuka plan
             for (int index = 0; index < data.Length; index++)
             {
                 if (data[index].Equals("m") || data[index].Equals("M") || data[index].Equals("c") ||
-                    data[index].Equals("C") || data[index].Equals("l") || data[index].Equals("L"))
+                    data[index].Equals("C") || data[index].Equals("l") || data[index].Equals("L") ||
+                    this.data[index].Equals("y") || this.data[index].Equals("Y"))
                 {
 
                 }
@@ -105,9 +101,124 @@ namespace KukaDraw.Brain
             }
         }
 
-        public List<PointF> getTabPointF()
+        public void coordinatesToAbsoluteOnes()
         {
-            return this.tabPointF;
+
+            Boolean endMove = true;
+            float baseX;
+            float baseY;
+
+            baseX = 0;
+            baseY = 0;
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                // M CASE
+                if (this.data[i].Equals("M") || this.data[i].Equals("m"))
+                {
+                    // Adapt coordinates
+                    this.data[i + 1] = (float.Parse(this.data[i + 1]) + baseX).ToString();
+                    this.data[i + 2] = (float.Parse(this.data[i + 2]) + baseY).ToString();
+
+                    // Get new base point
+                    baseX = float.Parse(this.data[i + 1]);
+                    baseY = float.Parse(this.data[i + 2]);
+
+                    // DEBUG
+                    Console.Write("M ");
+                }
+
+                // L CASE
+                else if (this.data[i].Equals("l") || this.data[i].Equals("L"))
+                {
+                    do
+                    {
+
+                        // Adapt coordinates
+                        this.data[i + 1] = (float.Parse(this.data[i + 1]) + baseX).ToString();
+                        this.data[i + 2] = (float.Parse(this.data[i + 2]) + baseY).ToString();
+
+                        // Get new base point
+                        baseX = float.Parse(this.data[i + 1]);
+                        baseY = float.Parse(this.data[i + 2]);
+
+                        // Move on the array
+                        i = i + 2;
+
+                        if (i < this.data.Length - 1) // Outside array ?
+                        {
+                            if (this.data[i + 1].Equals("m") || this.data[i + 1].Equals("M") || this.data[i + 1].Equals("Y") ||
+                        this.data[i + 1].Equals("c") || this.data[i + 1].Equals("C") || this.data[i + 1].Equals("l") ||
+                        this.data[i + 1].Equals("L") || this.data[i + 1].Equals("y")) // Another move ?
+                            {
+                                endMove = true;
+                            }
+                            else
+                            {
+                                endMove = false;
+                            }
+                        }
+                        else
+                        {
+                            endMove = true;
+                        }
+                    } while (endMove == false);
+
+                    // DEBUG
+                    Console.Write("L ");
+
+                }
+
+                // C CASE
+                else if (this.data[i].Equals("c") || this.data[i].Equals("C"))
+                {
+                    float tmpBaseX = 0;
+                    float tmpBaseY = 0;
+                    do
+                    {
+
+                        // Adapt coordinates
+                        this.data[i + 1] = (float.Parse(this.data[i + 1]) + baseX).ToString();
+                        this.data[i + 2] = (float.Parse(this.data[i + 2]) + baseY).ToString();
+
+                        // Get new temporary base point
+                        tmpBaseX = float.Parse(this.data[i + 1]);
+                        tmpBaseY = float.Parse(this.data[i + 2]);
+
+                        // Move on the array
+                        i = i + 2;
+
+                        if (i < this.data.Length - 1) // Outside array ?
+                        {
+                            if (this.data[i + 1].Equals("m") || this.data[i + 1].Equals("M") || this.data[i + 1].Equals("Y") ||
+                        this.data[i + 1].Equals("c") || this.data[i + 1].Equals("C") || this.data[i + 1].Equals("l") ||
+                        this.data[i + 1].Equals("L") || this.data[i + 1].Equals("y")) // Another move ?
+                            {
+                                endMove = true;
+                            }
+                            else
+                            {
+                                endMove = false;
+                            }
+                        }
+                        else
+                        {
+                            endMove = true;
+                        }
+                    } while (endMove == false);
+
+                    baseX = tmpBaseX;
+                    baseY = tmpBaseY;
+                }
+
+                // Y CASE
+                else if (this.data[i].Equals("y") || this.data[i].Equals("Y"))
+                {
+                    // New path. Initialization of base point.
+                    baseX = 0;
+                    baseY = 0;
+                }
+            }
         }
 
         public string[] getData()
@@ -156,7 +267,7 @@ namespace KukaDraw.Brain
                         j = j + 2;
                         if (j < this.data.Length - 1) // Outside array ?
                         {
-                            if (this.data[j + 1].Equals("m") || this.data[j + 1].Equals("M") ||
+                            if (this.data[j + 1].Equals("m") || this.data[j + 1].Equals("M") || this.data[j + 1].Equals("Y") || this.data[j + 1].Equals("y") ||
                         this.data[j + 1].Equals("c") || this.data[j + 1].Equals("C") || this.data[j + 1].Equals("l") ||
                         this.data[j + 1].Equals("L")) // Another move ?
                             {
@@ -176,7 +287,7 @@ namespace KukaDraw.Brain
                     } while (endMove == false);
 
                     i = j;
-
+                    PointListTmp = optimize.drawingOptimize(PointListTmp);
                     myOrders.addOrder(PointListTmp);
                     PointListTmp.Clear();
 
@@ -199,7 +310,7 @@ namespace KukaDraw.Brain
                         j = j + 2;
                         if (j < this.data.Length - 1) // Outside array ?
                         {
-                            if (this.data[j + 1].Equals("m") || this.data[j + 1].Equals("M") ||
+                            if (this.data[j + 1].Equals("m") || this.data[j + 1].Equals("M") || this.data[j + 1].Equals("Y") || this.data[j + 1].Equals("y") ||
                         this.data[j + 1].Equals("c") || this.data[j + 1].Equals("C") || this.data[j + 1].Equals("l") ||
                         this.data[j + 1].Equals("L")) // Another move ?
                             {
@@ -236,6 +347,7 @@ namespace KukaDraw.Brain
                         }
 
                     }
+                    PointListTmp2 = optimize.drawingOptimize(PointListTmp2);
                     myOrders.addOrder(PointListTmp2.ToArray());
 
                     // DEBUG

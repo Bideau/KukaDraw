@@ -37,7 +37,6 @@
             this.gbMenu = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
             this.bDrawRealTime = new System.Windows.Forms.Button();
-            this.bDraw = new System.Windows.Forms.Button();
             this.bDrawSVG = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lStatus = new System.Windows.Forms.Label();
@@ -108,7 +107,6 @@
             // 
             this.gbMenu.Controls.Add(this.button4);
             this.gbMenu.Controls.Add(this.bDrawRealTime);
-            this.gbMenu.Controls.Add(this.bDraw);
             this.gbMenu.Controls.Add(this.bDrawSVG);
             this.gbMenu.Location = new System.Drawing.Point(13, 124);
             this.gbMenu.Name = "gbMenu";
@@ -129,23 +127,13 @@
             // 
             // bDrawRealTime
             // 
-            this.bDrawRealTime.Location = new System.Drawing.Point(261, 101);
+            this.bDrawRealTime.Location = new System.Drawing.Point(139, 101);
             this.bDrawRealTime.Name = "bDrawRealTime";
             this.bDrawRealTime.Size = new System.Drawing.Size(227, 75);
             this.bDrawRealTime.TabIndex = 2;
             this.bDrawRealTime.Text = "Dessin Temps réél";
             this.bDrawRealTime.UseVisualStyleBackColor = true;
             this.bDrawRealTime.Click += new System.EventHandler(this.bDrawRealTime_Click);
-            // 
-            // bDraw
-            // 
-            this.bDraw.Location = new System.Drawing.Point(6, 101);
-            this.bDraw.Name = "bDraw";
-            this.bDraw.Size = new System.Drawing.Size(227, 75);
-            this.bDraw.TabIndex = 1;
-            this.bDraw.Text = "Dessiner";
-            this.bDraw.UseVisualStyleBackColor = true;
-            this.bDraw.Click += new System.EventHandler(this.bDraw_Click);
             // 
             // bDrawSVG
             // 
@@ -207,7 +195,6 @@
         private System.Windows.Forms.GroupBox gbMenu;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button bDrawRealTime;
-        private System.Windows.Forms.Button bDraw;
         private System.Windows.Forms.Button bDrawSVG;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label lStatus;

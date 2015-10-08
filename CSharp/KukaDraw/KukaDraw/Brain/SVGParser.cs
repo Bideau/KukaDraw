@@ -47,7 +47,7 @@ namespace KukaDraw.Brain
             foreach (XmlElement node in doc.GetElementsByTagName(Constants.path))
             {
                 //Console.WriteLine(node.GetAttribute("d") + " titi " + "\n");
-                this.data = this.data + Constants.stringSpace + node.GetAttribute(Constants.pathValue);
+                this.data = this.data + Constants.stringSpace + "Y" + Constants.stringSpace + node.GetAttribute(Constants.pathValue);
             }
             //suppression de tout les z dans les data
             this.data = this.data.Replace("z", isEmpty);

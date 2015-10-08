@@ -24,6 +24,9 @@ namespace KukaDraw.IHM
         private int? initX = null;
         private int? initY = null;
 
+        //debug
+        private Log debug;
+
         public Painter(ClientTcp client)
         {
             InitializeComponent();
@@ -31,6 +34,7 @@ namespace KukaDraw.IHM
             this.tabpointF = new List<PointF>();
             this.myOrder = new Orders();
             this.myClient = client;
+            debug = new Log(Constants.logPainter);
         }
 
         private void bDraw_Click(object sender, EventArgs e)
@@ -56,6 +60,7 @@ namespace KukaDraw.IHM
             this.initY = null;
             scaleTabPointF();
             this.myOrder.addOrder(this.tabpointF);
+            this.debug.writeLog(this.tabpointF);
         }
 
         private void pPainter_MouseMove(object sender, MouseEventArgs e)
